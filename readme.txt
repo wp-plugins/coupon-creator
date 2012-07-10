@@ -54,7 +54,7 @@ There are two sizes, but the image uploaded should be 400 pixels by 200 pixels t
 
 == Changelog ==
 = 1.1 =
-* Bug Fixes preventing iamges, js, and css from loading - Thanks for heads up from Tom Ewer of WPMU.org 
+* Bug Fixes preventing images, js, and css from loading - Thanks for heads up from Tom Ewer of WPMU.org 
 = 1.0 =
 * Initial Release and 1st Version and 1st Plugin! 
 
