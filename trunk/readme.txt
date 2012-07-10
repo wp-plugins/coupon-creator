@@ -4,8 +4,8 @@ Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, coupon image, shortcode inserter, custom meta box
 Requires at least: 3.3.2 
 Tested up to: 3.4.1
-Stable tag: 1.1
-Version: 1.1
+Stable tag: 1.1.1
+Version: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,8 @@ There are two sizes, but the image uploaded should be 400 pixels by 200 pixels t
 2. An example of the print view of the coupon
 
 == Changelog ==
+= 1.1.1 =
+* Taged Update
 = 1.1 =
 * Bug Fixes preventing images, js, and css from loading - Thanks for heads up from Tom Ewer of WPMU.org 
 = 1.0 =
@@ -60,8 +62,8 @@ There are two sizes, but the image uploaded should be 400 pixels by 200 pixels t
 
 == Upgrade Notice ==
 
-= 1.1 =
-Upgrade to 1.1 as the first version had a coding error preventing it from loading css, js, and images.
+= 1.1.1 =
+Upgrade to 1.1.1 as the first version had a coding error preventing it from loading css, js, and images.
 
 
 == Donations ==
