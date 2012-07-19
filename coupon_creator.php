@@ -391,7 +391,5 @@ register_activation_hook( __FILE__, 'cctor_activate_rewrite_flush' );
 			} // end foreach  
 		}  
 		// Save Meta Data and were done here
-		add_action('save_post', 'save_coupon_creator_meta'); 	
-	
-	
+		add_action('save_post', 'save_coupon_creator_meta');
 ?>
