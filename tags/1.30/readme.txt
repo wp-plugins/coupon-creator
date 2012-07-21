@@ -6,7 +6,7 @@ Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
 Requires at least: 3.3.2
 Tested up to: 3.4.1
-Stable tag: 1.20
+Stable tag: 1.30
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
