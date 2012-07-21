@@ -1,11 +1,12 @@
 === Coupon Creator ===
 Contributors: brianjessee
+Donate link: http://jesseeproductions.com/coupon-creator/donate/
 Plugin Name: Coupon Creator
 Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
 Requires at least: 3.3.2
 Tested up to: 3.4.1
-Stable tag: 1.20
+Stable tag: 1.30
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
@@ -20,6 +21,8 @@ Create a coupon by going to the coupon custom post type and filling in all the s
 Insert the coupon into a post or page using a shortcode. Plugin includes a coupon inserter into WordPress Editor for easy use. 
 
 Coupon displays until the expiration date chosen by you. 
+
+With version 1.30 if you check the Ignore Expiration Checkbox the coupon will display on the site past the expiration date or with no date at all. 
 
 Use the WordPress Shortcode:
 	[coupon couponid="xx" coupon_align="cctor_aligncenter" name="Coupon Name"]
@@ -51,6 +54,11 @@ Find examples of coupons on the [Coupon Creator Home Page](http://jesseeproducti
 6. Shortcode in WordPress Editor
 
 == Changelog ==
+= 1.30 =
+* Added checkbox to ignore expiration date so coupon will always display one website
+* "Expire On" will not show if no expiration is added
+* Added some more comments to coding and fixed line spacing issue
+* Added donation link
 
 = 1.20 =
 * Bug fixes to remove php notices in shortcode and in meta box
@@ -63,6 +71,12 @@ Find examples of coupons on the [Coupon Creator Home Page](http://jesseeproducti
 
 = 1.0 =
 * Initial Release and 1st Version and 1st Plugin!
+
+== Upgrade Notice ==
+
+= 1.30 =
+With version 1.30 if you check the Ignore Expiration Checkbox the coupon will display on the site past the expiration date or with no date at all. 
+
 
 == Frequently Asked Questions ==
 How big of an image is the coupon?
