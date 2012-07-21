@@ -77,7 +77,6 @@ Find examples of coupons on the [Coupon Creator Home Page](http://jesseeproducti
 = 1.30 =
 With version 1.30 if you check the Ignore Expiration Checkbox the coupon will display on the site past the expiration date or with no date at all. 
 
-
 == Frequently Asked Questions ==
 How big of an image is the coupon?
 There are two sizes, but the image uploaded should be at least 400 pixels by 200 pixels to display correctly. 
