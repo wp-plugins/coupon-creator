@@ -75,7 +75,7 @@ Find examples of coupons on the [Coupon Creator Home Page](http://jesseeproducti
 == Upgrade Notice ==
 
 = 1.30 =
-With version 1.30 if you check the Ignore Expiration Checkbox the coupon will display on the site past the expiration date or with no date at all. 
+Added the Ignore Expiration Checkbox so coupon will display on the site past the expiration date or with no date at all. 
 
 == Frequently Asked Questions ==
 How big of an image is the coupon?
