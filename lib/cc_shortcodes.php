@@ -67,7 +67,7 @@ function cctor_coupon_shortcode($atts) {
 				$output .=	"</div> <!--end .coupon --></div> <!--end .cctor_coupon -->";
 				}
 			//Add Link to Open in Print View	
-			$output .=	"<div class='cctor_opencoupon'><a href='javascript:;' onClick=javascript:window.open('".$permalink."')>Click to Print in a New Window</a></div><!--end .opencoupon -->";
+			$output .=	"<div class='cctor_opencoupon'><a href='".$permalink."' target='_blank'>Click to Open in Print View</a></div><!--end .opencoupon -->";
 			$output .= 	"</div><!--end .cctor_coupon_container -->";	
 		} 
        
