@@ -31,7 +31,10 @@ Coustom Template with Basic WordPress loaded no header footer, etc
 		list( $today_year, $today_month, $today_day, $hour, $minute, $second ) = split( '([^0-9])', $cc_blogtime ); //List out the Different Fields to Use
 		$cc_today = strtotime($today_month."/".$today_day."/". $today_year); //Combine the data we need to compare
 		$cc_expiration_date = strtotime($expirationco); //php fun and we are ready to compare
-		if ($cc_expiration_date >= $cc_today) { //Check Expiration Date if Past that Date do not display coupon
+		$ignore_expiration = get_post_meta($post->ID, 'cctor_ignore_expiration', true); //get the ignore expiration checkbox value
+		
+		if ($cc_expiration_date >= $cc_today || $ignore_expiration == "on" ) {  // Display coupon if expiration date is in future or if ignore box checked
+		
 			$couponimage_id = get_post_meta($post->ID, 'cctor_image', true); // Get Image Meta 
 			$couponimage = wp_get_attachment_image_src($couponimage_id, 'print_coupon'); //Get Right Size Image for Print Template
 			$couponimage = $couponimage[0]; //Make sure we only have first attached image not that there should be any others
@@ -51,7 +54,9 @@ Coustom Template with Basic WordPress loaded no header footer, etc
 						<?php echo get_post_meta($post->ID, 'cctor_amount', true);  ?></h3>
 						
 						<div class="cctor_deal"><?php echo get_post_meta($post->ID, 'cctor_description', true);  ?></div>
-						<div class="cctor_expiration">Expires on:&nbsp;<?php echo get_post_meta($post->ID, 'cctor_expiration', true);  ?></div>
+						<?php if ($expirationco) { // Only Display Expiration if Date ?>
+						<div class="cctor_expiration">Expires on:&nbsp;<?php echo $expirationco; ?></div>
+						<?php } //end if expiration ?>
 					</div> <!--end .cctor_coupon_content -->
 				</div> <!--end .cctor_coupon -->
 				
@@ -62,7 +67,7 @@ Coustom Template with Basic WordPress loaded no header footer, etc
 				
 			</div> <!--end .opencoupon -->
 		</div> <!--end #cctor_coupon_container -->
-	
+
 	<?php } // End the If Expiration Date?>
 
 <?php endwhile; // end the coupon creator loop ?>

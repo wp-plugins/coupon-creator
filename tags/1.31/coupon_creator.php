@@ -2,7 +2,7 @@
 /*
 Plugin name: Coupon Creator
 Plugin URI: http://jesseeproductions.com/coupon_creator/
-Version: 1.20
+Version: 1.31
 Description: This plugin creates a custom post type for coupons with a shortcode to display it on website and a single view template for printing.
 Author: Brian Jessee
 Author URI: http://jesseeproductions.com
@@ -281,11 +281,17 @@ register_activation_hook( __FILE__, 'cctor_activate_rewrite_flush' );
 				'type'  => 'textarea'  //textarea
 			),  
 			array(  
-				'label' => 'Expiration date:', 
+				'label' => 'Expiration Date:', 
 				'id' => $prefix . 'expiration', 
 				'desc' => 'The coupon will not display without the date and will not display on your site after the date.',
 				'type'  => 'date'  //datepicker
 			),
+			 array(  
+				'label'=> 'Ignore Expiration Date',  
+				'desc'  => 'Check this to ignore the expiration date.',  
+				'id'    => $prefix.'ignore_expiration',  
+				'type'  => 'checkbox'  
+			),  
 			array(  
 				'label'  => 'Image',  
 				'desc'  => 'Upload and insert an image as a coupon - Image Size 400 pixels by 200 pixels',  
@@ -325,6 +331,11 @@ register_activation_hook( __FILE__, 'cctor_activate_rewrite_flush' );
 								echo '<textarea name="'.$field['id'].'" id="'.$field['id'].'" cols="60" rows="4">'.$meta.'</textarea> 
 									<br /><span class="description">'.$field['desc'].'</span>';  
 							break; 
+							// checkbox  
+							case 'checkbox':  
+								echo '<input type="checkbox" name="'.$field['id'].'" id="'.$field['id'].'" ',$meta ? ' checked="checked"' : '','/> 
+									<label for="'.$field['id'].'">'.$field['desc'].'</label>';  
+							break;  
 							// image  
 							case 'image':  
 								$image = COUPON_PLUGIN_URL .'/images/optional_coupon.png';  

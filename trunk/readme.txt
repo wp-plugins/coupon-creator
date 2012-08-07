@@ -5,7 +5,7 @@ Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
 Requires at least: 3.3.2
 Tested up to: 3.4.1
-Stable tag: 1.30
+Stable tag: 1.31
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
@@ -53,6 +53,10 @@ Find examples of coupons on the [Coupon Creator Home Page](http://jesseeproducti
 6. Shortcode in WordPress Editor
 
 == Changelog ==
+= 1.31 =
+* Modifed Click to Open in New Window Coding so it will open new window without javascript.
+* Note this may not open a new window in all browsers.
+
 = 1.30 =
 * Added checkbox to ignore expiration date so coupon will always display one website
 * "Expire On" will not show if no expiration is added
@@ -73,8 +77,8 @@ Find examples of coupons on the [Coupon Creator Home Page](http://jesseeproducti
 
 == Upgrade Notice ==
 
-= 1.30 =
-Now you can check the Ignore Expiration Checkbox and the coupon will display on your web site past the expiration date or with no date at all. 
+= 1.31 =
+Fixed Issue With Coupon Not Opening In New Window
 
 == Frequently Asked Questions ==
 How big of an image is the coupon?
