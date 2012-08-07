@@ -45,8 +45,9 @@ function cctor_coupon_shortcode($atts) {
 		list( $today_year, $today_month, $today_day, $hour, $minute, $second ) = split( '([^0-9])', $cc_blogtime );
 		$cc_today = strtotime($today_month."/".$today_day."/". $today_year);
 		$cc_expiration_date = strtotime($expirationco);
+		$ignore_expiration = get_post_meta($post->ID, 'cctor_ignore_expiration', true); //get the ignore expiration checkbox value
 		
-		if ($cc_expiration_date >= $cc_today) {
+		if ($cc_expiration_date >= $cc_today || $ignore_expiration == "on" ) { // Display coupon if expiration date is in future or if ignore box checked
 			$output = '';	
 			//Start Single View 
 			$output .=  "<div class='cctor_coupon_container ". $coupon_align ."'>";
@@ -60,10 +61,13 @@ function cctor_coupon_shortcode($atts) {
 				$output .=  "<div class='cctor_coupon_content' style='border-color:".$bordercolor."!important;'>";	
 				$output .=  "<h3 style='background-color:".$colordiscount."!important; color:".$colorheader."!important;'>" . $amountco . "</h3>";
 				$output .=	"<div class='cctor_deal'>".$descriptionco."</div>";
-				$output .=	"<div class='cctor_expiration'>Expires on:&nbsp;".$expirationco."</div></div> <!--end .coupon --></div> <!--end .cctor_coupon -->";
+				if ($expirationco) {  // Only Display Expiration if Date
+				$output .=	"<div class='cctor_expiration'>Expires on:&nbsp;".$expirationco."</div>";
+					} //end If Expiration
+				$output .=	"</div> <!--end .coupon --></div> <!--end .cctor_coupon -->";
 				}
 			//Add Link to Open in Print View	
-			$output .=	"<div class='cctor_opencoupon'><a href='".$permalink."' target='_blank'>Click to Open in Print View</a></div><!--end .opencoupon -->";
+			$output .=	"<div class='cctor_opencoupon'><a href='javascript:;' onClick=javascript:window.open('".$permalink."')>Click to Print in a New Window</a></div><!--end .opencoupon -->";
 			$output .= 	"</div><!--end .cctor_coupon_container -->";	
 		} 
        
