@@ -59,10 +59,7 @@ To your theme's function.php
 6. Shortcode in WordPress Editor
 
 == Changelog ==
-= 1.36 =
-* Fixed SVN to latest version 
-
-= 1.35 =
+= 1.37 =
 * Changed Insert Coupon Icon on Editor for WordPress 3.5
 * Added CSS for inside .widget-wrap to fit 100% into space
 * Coupon Images are now links to larger view. Thanks to the coding from Darin of VzPro
@@ -92,7 +89,7 @@ To your theme's function.php
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
-= 1.36 =
+= 1.37 =
 Add Date Format Changes, Sidebar CSS, 3.5 Updates, and more.
 
 = 1.31 =
