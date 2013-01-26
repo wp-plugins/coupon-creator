@@ -4,8 +4,8 @@ Plugin Name: Coupon Creator
 Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
 Requires at least: 3.3.2
-Tested up to: 3.4.1
-Stable tag: 1.31
+Tested up to: 3.5.1
+Stable tag: 1.35
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
@@ -36,6 +36,12 @@ name -optional and for your reference only
 
 Find examples of coupons on the [Coupon Creator Home Page](http://jesseeproductions.com/coupon-creator/)
 
+Coupons will work in Sidebar, but make sure to add 
+
+add_filter('widget_text', 'do_shortcode');
+
+To your theme's function.php
+
 == Installation ==
 
 1. Upload `/coupon_creator/` to the `/wp-content/plugins/` directory
@@ -53,6 +59,13 @@ Find examples of coupons on the [Coupon Creator Home Page](http://jesseeproducti
 6. Shortcode in WordPress Editor
 
 == Changelog ==
+= 1.35 =
+* Changed Insert Coupon Icon on Editor for WordPress 3.5
+* Added CSS for inside .widget-wrap to fit 100% into space
+* Coupon Images are now links to larger view. Thanks to the coding from Darin of VzPro
+* Made the Click to Open in Print View font a little larger
+
+
 = 1.31 =
 * Modifed Click to Open in New Window Coding so it will open new window without javascript.
 * Note this may not open a new window in all browsers.
@@ -76,6 +89,8 @@ Find examples of coupons on the [Coupon Creator Home Page](http://jesseeproducti
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
+= 1.35 =
+Add Date Format Changes, Sidebar CSS, 3.5 Updates, and more.
 
 = 1.31 =
 Fixed Issue With Coupon Not Opening In New Window
