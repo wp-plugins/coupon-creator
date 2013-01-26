@@ -60,9 +60,6 @@ To your theme's function.php
 
 == Changelog ==
 = 1.37 =
-* Fixed SVN to latest version 
-
-= 1.35 =
 * Changed Insert Coupon Icon on Editor for WordPress 3.5
 * Added CSS for inside .widget-wrap to fit 100% into space
 * Coupon Images are now links to larger view. Thanks to the coding from Darin of VzPro
