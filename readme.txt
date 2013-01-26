@@ -5,7 +5,7 @@ Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
 Requires at least: 3.3.2
 Tested up to: 3.5.1
-Stable tag: 1.36
+Stable tag: 1.37
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
@@ -59,7 +59,7 @@ To your theme's function.php
 6. Shortcode in WordPress Editor
 
 == Changelog ==
-= 1.36 =
+= 1.37 =
 * Fixed SVN to latest version 
 
 = 1.35 =
@@ -92,7 +92,7 @@ To your theme's function.php
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
-= 1.36 =
+= 1.37 =
 Add Date Format Changes, Sidebar CSS, 3.5 Updates, and more.
 
 = 1.31 =
