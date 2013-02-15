@@ -44,7 +44,7 @@ To your theme's function.php
 
 == Installation ==
 
-1. Upload `/coupon_creator/` to the `/wp-content/plugins/` directory
+1. Upload `/coupon-creator/` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Create a coupon under the coupon custom post type and insert shortcode into content using shortcode
 	[coupon couponid="xx" coupon_align="cctor_aligncenter" name="Coupon Name"]
