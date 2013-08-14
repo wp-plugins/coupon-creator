@@ -3,9 +3,9 @@ Contributors: brianjessee
 Plugin Name: Coupon Creator
 Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
-Requires at least: 3.3.2
-Tested up to: 3.5.1
-Stable tag: 1.37
+Requires at least: 3.5
+Tested up to: 3.6
+Stable tag: 1.40
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
@@ -17,14 +17,14 @@ Create your own coupon with the Coupon Creator for WordPress or upload an image 
 
 Create a coupon by going to the coupon custom post type and filling in all the settings in the custom meta box. 
 
-Insert the coupon into a post or page using a shortcode. Plugin includes a coupon inserter into WordPress Editor for easy use. 
+Insert the coupon into a post or page using a shortcode.
 
 Coupon displays until the expiration date chosen by you. 
 
-With version 1.30 if you check the Ignore Expiration Checkbox the coupon will display on the site past the expiration date or with no date at all. 
+If you check the Ignore Expiration Checkbox the coupon will display on the site past the expiration date or with no date at all. 
 
-Use the WordPress Shortcode:
-	[coupon couponid="xx" coupon_align="cctor_aligncenter" name="Coupon Name"]
+The Coupon Shortcode:
+	[coupon couponid="xx" category="Category Name(optional)" coupon_align="cctor_aligncenter" name="Coupon Name"]
 	
 Manually replace fields in shortcode:
 
@@ -34,9 +34,37 @@ couponalign - align coupon options:  cctor_aligncenter,  cctor_alignnone,  cctor
 
 name -optional and for your reference only
 
+Coupon Loop (Version 1.40)
+
+Set couponid to "loop" to display all coupons. (couponid="loop")
+
+All the coupons in the loop will use the same couponalign. 
+
+Coupon Categories (Version 1.40)
+
+Assign categories to a coupon and with the loop option only display coupons from a specific category. 
+
+category - add the category name to display coupons only from it
+
+For example if you have a category called Coupon Home Page, call it by:
+
+category="Coupon Home Page"
+
+Coupon Shortcode Inserter
+
+Above the post editor click the "Add Coupon" button to open the inserter. 
+
+Select an individual coupon or coupon loop.  
+
+If you select coupon loop an option will appear to select a specific category for the loop or leave it blank for all coupons (default).
+
+The third option to select is the couponalign.
+
+Once you have all the options selected, press "Insert Coupon" to create the shortcode into the editor. 
+
 Find examples of coupons on the [Coupon Creator Home Page](http://jesseeproductions.com/coupon-creator/)
 
-Coupons will work in Sidebar, but make sure to add 
+Coupons will work in Sidebar Text Widgets, but make sure to add 
 
 add_filter('widget_text', 'do_shortcode');
 
@@ -44,7 +72,7 @@ To your theme's function.php
 
 == Installation ==
 
-1. Upload `/coupon-creator/` to the `/wp-content/plugins/` directory
+1. Upload `/coupon_creator/` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Create a coupon under the coupon custom post type and insert shortcode into content using shortcode
 	[coupon couponid="xx" coupon_align="cctor_aligncenter" name="Coupon Name"]
@@ -59,12 +87,21 @@ To your theme's function.php
 6. Shortcode in WordPress Editor
 
 == Changelog ==
+= 1.40 =
+* Added a loop option to the shortcode to display more then one coupon
+* Added coupon categories to use with the loop option of the shortcode
+* Fixed css for box-sizing: content-box for the coupons or in themes like Twenty Thirteen the styling broke
+* Added plugin version into WordPress Database options for future updates
+* Updated Colobox script and fixed background images
+
 = 1.37 =
+* Fixed SVN to latest version 
+
+= 1.35 =
 * Changed Insert Coupon Icon on Editor for WordPress 3.5
 * Added CSS for inside .widget-wrap to fit 100% into space
 * Coupon Images are now links to larger view. Thanks to the coding from Darin of VzPro
 * Made the Click to Open in Print View font a little larger
-
 
 = 1.31 =
 * Modifed Click to Open in New Window Coding so it will open new window without javascript.
@@ -89,11 +126,9 @@ To your theme's function.php
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
-= 1.37 =
-Add Date Format Changes, Sidebar CSS, 3.5 Updates, and more.
+= 1.40 =
+New Shortcode Options: Coupon Loop with Coupon Categories. 
 
-= 1.31 =
-Fixed Issue With Coupon Not Opening In New Window
 
 == Frequently Asked Questions ==
 How big of an image is the coupon?
