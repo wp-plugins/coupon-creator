@@ -5,7 +5,7 @@ Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 1.40
+Stable tag: 1.41
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
@@ -13,19 +13,19 @@ Create coupons and display on your site by using a shortcode. Customize the look
 
 == Description ==
 
-Create your own coupon with the Coupon Creator for WordPress or upload an image of a coupon instead. 
+Create your own coupon with the Coupon Creator for WordPress or upload an image of a coupon instead.
 
-Create a coupon by going to the coupon custom post type and filling in all the settings in the custom meta box. 
+Create a coupon by going to the coupon custom post type and filling in all the settings in the custom meta box.
 
 Insert the coupon into a post or page using a shortcode.
 
-Coupon displays until the expiration date chosen by you. 
+Coupon displays until the expiration date chosen by you.
 
-If you check the Ignore Expiration Checkbox the coupon will display on the site past the expiration date or with no date at all. 
+If you check the Ignore Expiration Checkbox the coupon will display on the site past the expiration date or with no date at all.
 
 The Coupon Shortcode:
 	[coupon couponid="xx" category="Category Name(optional)" coupon_align="cctor_aligncenter" name="Coupon Name"]
-	
+
 Manually replace fields in shortcode:
 
 couponid - replace xx with ID of Coupon custom post
@@ -38,11 +38,11 @@ Coupon Loop (Version 1.40)
 
 Set couponid to "loop" to display all coupons. (couponid="loop")
 
-All the coupons in the loop will use the same couponalign. 
+All the coupons in the loop will use the same couponalign.
 
 Coupon Categories (Version 1.40)
 
-Assign categories to a coupon and with the loop option only display coupons from a specific category. 
+Assign categories to a coupon and with the loop option only display coupons from a specific category.
 
 category - add the category name to display coupons only from it
 
@@ -52,19 +52,19 @@ category="Coupon Home Page"
 
 Coupon Shortcode Inserter
 
-Above the post editor click the "Add Coupon" button to open the inserter. 
+Above the post editor click the "Add Coupon" button to open the inserter.
 
-Select an individual coupon or coupon loop.  
+Select an individual coupon or coupon loop.
 
 If you select coupon loop an option will appear to select a specific category for the loop or leave it blank for all coupons (default).
 
 The third option to select is the couponalign.
 
-Once you have all the options selected, press "Insert Coupon" to create the shortcode into the editor. 
+Once you have all the options selected, press "Insert Coupon" to create the shortcode into the editor.
 
 Find examples of coupons on the [Coupon Creator Home Page](http://jesseeproductions.com/coupon-creator/)
 
-Coupons will work in Sidebar Text Widgets, but make sure to add 
+Coupons will work in Sidebar Text Widgets, but make sure to add
 
 add_filter('widget_text', 'do_shortcode');
 
@@ -87,6 +87,9 @@ To your theme's function.php
 6. Shortcode in WordPress Editor
 
 == Changelog ==
+= 1.41 =
+* Added Post Reset Function to the shortcode to fix an issue preventing comments from showing
+
 = 1.40 =
 * Added a loop option to the shortcode to display more then one coupon
 * Added coupon categories to use with the loop option of the shortcode
@@ -95,7 +98,7 @@ To your theme's function.php
 * Updated Colobox script and fixed background images
 
 = 1.37 =
-* Fixed SVN to latest version 
+* Fixed SVN to latest version
 
 = 1.35 =
 * Changed Insert Coupon Icon on Editor for WordPress 3.5
@@ -117,22 +120,22 @@ To your theme's function.php
 * Bug fixes to remove php notices in shortcode and in meta box
 
 = 1.1.5 =
-* Fixed SVN to latest version 
+* Fixed SVN to latest version
 
 = 1.1 =
-* Bug Fixes preventing images, js, and css from loading - Thanks for heads up from Tom Ewer of WPMU.org 
+* Bug Fixes preventing images, js, and css from loading - Thanks for heads up from Tom Ewer of WPMU.org
 
 = 1.0 =
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
-= 1.40 =
-New Shortcode Options: Coupon Loop with Coupon Categories. 
+= 1.41 =
+1.41 fixes comment section conflict - New Shortcode Options: Coupon Loop with Coupon Categories with 1.40.
 
 
 == Frequently Asked Questions ==
 How big of an image is the coupon?
-There are two sizes, but the image uploaded should be at least 400 pixels by 200 pixels to display correctly. 
+There are two sizes, but the image uploaded should be at least 400 pixels by 200 pixels to display correctly.
 
 What if I have support questions?
 Please use the [Coupon Creator Support Forum](http://wordpress.org/support/plugin/coupon-creator) on WordPress.
