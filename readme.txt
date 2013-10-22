@@ -130,7 +130,7 @@ To your theme's function.php
 
 == Upgrade Notice ==
 = 1.41 =
-New Shortcode Options: Coupon Loop with Coupon Categories.(1.41 fixes comment section conflict)
+1.41 fixes comment section conflict - New Shortcode Options: Coupon Loop with Coupon Categories with 1.40.
 
 
 == Frequently Asked Questions ==
