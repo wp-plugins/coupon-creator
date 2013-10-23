@@ -538,7 +538,6 @@ register_activation_hook( __FILE__, 'cctor_activate_rewrite_flush' );
 
 			// loop through fields and save the data
 			foreach ($coupon_creator_meta_fields as $field) {
-				if(isset($_POST[$field['id']])){
 					$old = get_post_meta($post_id, $field['id'], true);
 					$new = $_POST[$field['id']];
 					if ($new && $new != $old) {
@@ -546,7 +545,6 @@ register_activation_hook( __FILE__, 'cctor_activate_rewrite_flush' );
 					} elseif ('' == $new && $old) {
 						delete_post_meta($post_id, $field['id'], $old);
 					}
-				}
 			} // end foreach
 
 		}
