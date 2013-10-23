@@ -1,1 +1,130 @@
-/* Coupon Creator CSS------------------------------------------------------------ */.cctor_coupon_container {	width: 317px;	margin: 0 10px;	overflow:hidden;	text-align: center;	max-width:100%;}.cctor_coupon_container, .cctor_coupon_container * {	box-sizing: content-box;	-moz-box-sizing: content-box;}.print_coupon {	width: 420px;	margin: 10px auto;}.cctor_coupon {	width: 300px;	height: 150px;		padding:5px;	border: 3px dashed black;	max-width:100%;	   }.print_coupon .cctor_coupon {	width: 400px;	height: 200px;   }.cctor_coupon_image {	padding:1%;	border: 3px dashed black; 	max-width: 96%;}    .cctor_coupon_content {	position:relative;	width:99%;	height: 146px;	border: 2px solid #0030ff;	background: #fff;}.print_coupon .cctor_coupon_content {	width:99%;	height: 196px;   }.cctor_coupon_content h3 {		position:absolute;		top:0px;		left:0px;		width: 96.8%;		height: 25px;		line-height: 25px;		padding:5px;		margin: 0px;		background: #ffa300;		font-size:24px;		font-weight:bold;		color: #000;}	.print_coupon .cctor_coupon_content h3 {		width:99.9%;		height: 30px;		padding: 7px 0;		font-size:30px;		line-height: 30px;}	.cctor_deal {		position:absolute;		top:35px;		left:0px;		width:95.5%;		margin: 5px 8px;		line-height:18px;		font-size:14px;		font-weight:bold;}	.print_coupon  .cctor_deal {		top:50px;		font-size:20px;}		.cctor_expiration  {		position:absolute;		bottom:0px;		left:0px;		width:100%;		font-size:10px;		font-weight:bold;}.cctor_opencoupon  {		width:100%;		height:20px;		margin-top: 10px;		font-size:14px;}.cctor_alignnone {	display: inline-block;	margin: 0 0 10px;}.cctor_alignleft {	float: left;	display: inline;	margin: 0 10px 10px 0;}.cctor_alignright {	float: right;	display: inline;	margin: 0 0 10px 10px;}.cctor_aligncenter {	display: block;	margin: 10px auto;}/* Coupon Creator CSS------------------------------------------------------------ */.widget-wrap .cctor_coupon {	width: 94%;	padding: 2%;	border: 1% dashed black;	max-width:100%;	}.widget-wrap .cctor_coupon_image {	padding:2%;	border: 1% dashed black; 	width: 94%;}   @media print {.cctor_opencoupon { 	display:none !important; 	}}
+/* Coupon Creator CSS
+------------------------------------------------------------ */
+.cctor_coupon_container {
+	width: 317px;
+	margin: 0 10px;
+	overflow:hidden;
+	text-align: center;
+	max-width:100%;
+}
+.cctor_coupon_container, .cctor_coupon_container * {
+	box-sizing: content-box;
+	-moz-box-sizing: content-box;
+}
+.print_coupon {
+	width: 420px;
+	margin: 10px auto;
+}
+.cctor_coupon {
+	width: 300px;
+	height: 150px;	
+	padding:5px;
+	border: 3px dashed black;
+	max-width:100%;	
+   }
+.print_coupon .cctor_coupon {
+	width: 400px;
+	height: 200px;
+   }
+.cctor_coupon_image {
+	padding:1%;
+	border: 3px dashed black; 
+	max-width: 96%;
+}    
+.cctor_coupon_content {
+	position:relative;
+	width:99%;
+	height: 146px;
+	border: 2px solid #0030ff;
+	background: #fff;
+}
+.print_coupon .cctor_coupon_content {
+	width:99%;
+	height: 196px;
+   }
+.cctor_coupon_content h3 {
+		position:absolute;
+		top:0px;
+		left:0px;
+		width: 96.8%;
+		height: 25px;
+		line-height: 25px;
+		padding:5px;
+		margin: 0px;
+		background: #ffa300;
+		font-size:24px;
+		font-weight:bold;
+		color: #000;
+}	
+.print_coupon .cctor_coupon_content h3 {
+		width:99.9%;
+		height: 30px;
+		padding: 7px 0;
+		font-size:30px;
+		line-height: 30px;
+}	
+.cctor_deal {
+		position:absolute;
+		top:35px;
+		left:0px;
+		width:95.5%;
+		margin: 5px 8px;
+		line-height:18px;
+		font-size:14px;
+		font-weight:bold;
+}	
+.print_coupon  .cctor_deal {
+		top:50px;
+		font-size:20px;
+}	
+	
+.cctor_expiration  {
+		position:absolute;
+		bottom:0px;
+		left:0px;
+		width:100%;
+		font-size:10px;
+		font-weight:bold;
+}
+.cctor_opencoupon  {
+		width:100%;
+		height:20px;
+		margin-top: 10px;
+		font-size:14px;
+}
+.cctor_alignnone {
+	display: inline-block;
+	margin: 0 0 10px;
+}
+.cctor_alignleft {
+	float: left;
+	display: inline;
+	margin: 0 10px 10px 0;
+}
+.cctor_alignright {
+	float: right;
+	display: inline;
+	margin: 0 0 10px 10px;
+}
+.cctor_aligncenter {
+	display: block;
+	margin: 10px auto;
+}
+/* Coupon Creator CSS
+------------------------------------------------------------ */
+.widget-wrap .cctor_coupon {
+	width: 94%;
+	padding: 2%;
+	border: 1% dashed black;
+	max-width:100%;	
+}
+.widget-wrap .cctor_coupon_image {
+	padding:2%;
+	border: 1% dashed black; 
+	width: 94%;
+}   
+@media print {
+.cctor_opencoupon { 
+	display:none !important; 
+	}
+}
