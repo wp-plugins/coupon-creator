@@ -3,8 +3,8 @@ Contributors: brianjessee
 Plugin Name: Coupon Creator
 Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
-Requires at least: 3.5
-Tested up to: 3.6
+Requires at least: 3.6
+Tested up to: 3.8
 Stable tag: 1.45
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
