@@ -20,12 +20,12 @@ Version 1.50 adds translation to the Coupon Creator.
 
 To add a translation, please reply to the Translation Post with the language and country you are translating. The post is in the Support Forum and it will be added to the next version of the Coupon Creator.
 
-Please translate the following phrases:
+= Please translate the following phrases: =
 *   Click to Print
 *   Click to Open in Print View
 *   Expires On:
 
-Current Translations included:
+= Current Translations included: =
 *   English (Default)
 *   Spanish (Thanks to Carmen in Miami)
 
