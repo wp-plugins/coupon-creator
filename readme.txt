@@ -18,7 +18,7 @@ Create your own coupon with the Coupon Creator for WordPress or upload an image 
 <h4>Translation(1.50)</h4>
 Version 1.50 adds translation to the Coupon Creator. 
 
-To add a translation please reply to the Translation post it in the Support Forum and it will be added to the next version of the Coupon Creator. 
+To add a translation, please reply to the Translation Post with the language and country you are translating. The post is in the Support Forum and it will be added to the next version of the Coupon Creator.
 
 == Please translate the following phrases: ==
 *   Click to Print
