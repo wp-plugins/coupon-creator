@@ -71,14 +71,14 @@ function cctor_allcoupons_shortcode($atts) {
 				$alloutput .=	"<div class='cctor_deal'>".$descriptionco."</div>";
 				if ($expirationco) {  // Only Display Expiration if Date
 					if ($daymonth_date_format == "on" ) { //Change to Day - Month Style
-						$expirationco = date("d-m-Y", $cc_expiration_date);
+						$expirationco = date("d/m/Y", $cc_expiration_date);
 					}
-				$alloutput .=	"<div class='cctor_expiration'>Expires on:&nbsp;".$expirationco."</div>";
+				$alloutput .=	"<div class='cctor_expiration'>".__('Expires on:','couponcreator')."&nbsp;".$expirationco."</div>";
 					} //end If Expiration
 				$alloutput .=	"</div> <!--end .coupon --></div> <!--end .cctor_coupon -->";
 				}
 			//Add Link to Open in Print View
-			$alloutput .=	"<div class='cctor_opencoupon'><a rel='coupon' href='".$permalink." 'onclick='window.open(this.href);return false;'>Click to Open in Print View</a></div><!--end .opencoupon -->";
+			$alloutput .=	"<div class='cctor_opencoupon'><a rel='coupon' href='".$permalink." 'onclick='window.open(this.href);return false;'>".__('Click to Open in Print View','couponcreator')."</a></div><!--end .opencoupon -->";
 			$alloutput .= 	"</div><!--end .cctor_coupon_container -->";
 		} //End Coupon Display
 

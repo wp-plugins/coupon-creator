@@ -1,0 +1,32 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Coupon Creator\n"
+"POT-Creation-Date: 2014-01-24 18:47-0500\n"
+"PO-Revision-Date: 2014-01-24 18:54-0500\n"
+"Last-Translator: Careground <info@careground.com>\n"
+"Language-Team: Brian Jessee <info@jesseeproductions.com>\n"
+"Language: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.5\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: C:\\Users\\Brian Jessee\\Desktop\\Web Design"
+"\\Production\\coupon-creator\\lib\n"
+
+#: C:\Users\Brian Jessee\Desktop\Web
+#: Design\Production\coupon-creator\lib/cc_coupon_loop_shortcode.php:76
+#: Design\Production\coupon-creator\lib/single-coupon.php:64
+msgid "Expires on:"
+msgstr ""
+
+#: C:\Users\Brian Jessee\Desktop\Web
+#: Design\Production\coupon-creator\lib/cc_coupon_loop_shortcode.php:81
+msgid "Click to Open in Print View"
+msgstr ""
+
+#: C:\Users\Brian Jessee\Desktop\Web
+#: Design\Production\coupon-creator\lib/single-coupon.php:74
+msgid "Click to Print"
+msgstr ""

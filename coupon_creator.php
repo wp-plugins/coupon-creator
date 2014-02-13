@@ -2,13 +2,14 @@
 /*
 Plugin name: Coupon Creator
 Plugin URI: http://jesseeproductions.com/coupon_creator/
-Version: 1.45
+Version: 1.50
 Description: This plugin creates a custom post type for coupons with a shortcode to display it on website and a single view template for printing.
 Author: Brian Jessee
 Author URI: http://jesseeproductions.com
 License: GPL2
 */
 /**
+ *
  * Define the Plugin URL and Lets Go!
  *
  */
@@ -19,22 +20,24 @@ if (!defined('CCTOR_COUPON_VERSION_KEY'))
     define('CCTOR_COUPON_VERSION_KEY', 'cctor_coupon_version');
 
 if (!defined('CCTOR_COUPON_VERSION_NUM'))
-    define('CCTOR_COUPON_VERSION_NUM', '1.45');
+    define('CCTOR_COUPON_VERSION_NUM', '1.50');
 
-$cctor_new_version = '1.45';
+$cctor_new_version = '1.50';
 
 if (get_option(CCTOR_COUPON_VERSION_KEY) != $cctor_new_version) {
     // Then update the version value
     update_option(CCTOR_COUPON_VERSION_KEY, $cctor_new_version);
 }
-		/**
- * This file holds the shortcode
- *
- */
-	//require 'lib/admin_cctor.php';
-	//include_once 'lib/cc_single_shortcode.php';
-	include_once 'lib/cc_coupon_loop_shortcode.php';
+
 /**
+ * 
+ * Load the Coupon Creator Shortcoce
+ * 
+ */
+include_once 'lib/cc_coupon_loop_shortcode.php';
+
+/**
+ *
  * Register the Coupon CSS
  *
  */
@@ -45,12 +48,25 @@ if (get_option(CCTOR_COUPON_VERSION_KEY) != $cctor_new_version) {
 	}
 	add_action('wp_print_styles', 'cctor_register_style');
 /**
+ *
  * Add Custom Image Sizes for Coupon on Site and Print Coupon so no resizing later
  *
  */
 add_image_size('single_coupon', 300, 150, TRUE);
 add_image_size('print_coupon', 400, 200, TRUE);
+
 /**
+ *
+ * Localization
+ * @ Version 1.50
+ */
+ function cctor_action_init() {
+	load_plugin_textdomain('couponcreator', false, basename( dirname( __FILE__ ) ) . '/languages' );
+}
+add_action('init', 'cctor_action_init');
+
+/**
+ *
  * Create the Coupon Creator Custom Post Type with Coupons
  *
  */
@@ -132,6 +148,7 @@ add_image_size('print_coupon', 400, 200, TRUE);
 	}
 
 /**
+ *
  * Plugin Activation Only Flush Rewrite for Correct Permalinks to Work
  * Coding from WordPress Codex on http://codex.wordpress.org/Function_Reference/register_post_type
  *
@@ -149,6 +166,7 @@ function cctor_activate_rewrite_flush() {
 register_activation_hook( __FILE__, 'cctor_activate_rewrite_flush' );
 
 /**
+ *
  * Use Single Coupon Template from Plugin when creating the print version
  *
  */
@@ -161,6 +179,7 @@ register_activation_hook( __FILE__, 'cctor_activate_rewrite_flush' );
 	}
 	add_filter( "single_template", "get_coupon_post_type_template" ) ;
 /**
+ *
  * Add Coupon Pop Up to Editor
  * Modified coding from post on themergency! http://themergency.com/adding-custom-buttons-to-the-wordpress-content-editor-part-1/
  *
@@ -202,7 +221,7 @@ register_activation_hook( __FILE__, 'cctor_activate_rewrite_flush' );
 				}
 			 </style>
 				<a class='thickbox button cctor_insert_link' id='add_jp_gallery'  title='{$title}' href='#TB_inline?width=640&inlineId={$container_id}'><span class='cctor_insert_icon'></span>Add Coupon</a>";
-				}
+			}
 		  return $context;
 	} //End Insert Icon Creation
 
@@ -321,6 +340,7 @@ register_activation_hook( __FILE__, 'cctor_activate_rewrite_flush' );
 
 	} // End Insert into Editor Coding
 /**
+ *
  * Custom Coupon Meta Box
  * Modifed coding from the Tutorials of WP Tuts Plus - http://wp.tutsplus.com/tutorials/reusable-custom-meta-boxes-part-1-intro-and-basic-fields/
  * Color Picker coding modifed from Deluxe Tips - http://www.deluxeblogtips.com/meta-box/

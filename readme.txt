@@ -4,8 +4,8 @@ Plugin Name: Coupon Creator
 Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
 Requires at least: 3.6
-Tested up to: 3.8
-Stable tag: 1.45
+Tested up to: 3.8.1
+Stable tag: 1.50
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
@@ -15,6 +15,21 @@ Create coupons and display on your site by using a shortcode. Customize the look
 
 Create your own coupon with the Coupon Creator for WordPress or upload an image of a coupon instead.
 
+<h4>Translation(1.50)</h4>
+Version 1.50 adds translation to the Coupon Creator. 
+
+To add a translation please reply to the Translation post it in the Support Forum and it will be added to the next version of the Coupon Creator. 
+
+== Please translate the following phrases: ==
+*   Click to Print
+*   Click to Open in Print View
+*   Expires On:
+
+Current Translations included:
+*   English (Default)
+*   Spanish (Thanks to Carmen in Miami)
+
+<h4>How to Create a Coupon</h4>
 Create a coupon by going to the coupon custom post type and filling in all the settings in the custom meta box.
 
 Insert the coupon into a post or page using a shortcode.
@@ -22,6 +37,8 @@ Insert the coupon into a post or page using a shortcode.
 Coupon displays until the expiration date chosen by you.
 
 If you check the Ignore Expiration Checkbox the coupon will display on the site past the expiration date or with no date at all.
+
+<h4>Coupon Creator Shortcode</h4>
 
 The Coupon Shortcode:
 	[coupon couponid="xx" category="Category Name(optional)" coupon_align="cctor_aligncenter" name="Coupon Name"]
@@ -34,13 +51,13 @@ couponalign - align coupon options:  cctor_aligncenter,  cctor_alignnone,  cctor
 
 name -optional and for your reference only
 
-Coupon Loop (Version 1.40)
+<h4>Coupon Loop</h4>
 
 Set couponid to "loop" to display all coupons. (couponid="loop")
 
 All the coupons in the loop will use the same couponalign.
 
-Coupon Categories (Version 1.40)
+<h4>Coupon Categories</h4>
 
 Assign categories to a coupon and with the loop option only display coupons from a specific category.
 
@@ -50,7 +67,7 @@ For example if you have a category called Coupon Home Page, call it by:
 
 category="Coupon Home Page"
 
-Coupon Shortcode Inserter
+<h4>Coupon Shortcode Inserter</h4>
 
 Above the post editor click the "Add Coupon" button to open the inserter.
 
@@ -62,7 +79,11 @@ The third option to select is the couponalign.
 
 Once you have all the options selected, press "Insert Coupon" to create the shortcode into the editor.
 
+<h4>Examples</h4>
+
 Find examples of coupons on the [Coupon Creator Home Page](http://jesseeproductions.com/coupon-creator/)
+
+<h4>Coupons in Text Widgets</h4>
 
 Coupons will work in Sidebar Text Widgets, but make sure to add
 
@@ -87,6 +108,11 @@ To your theme's function.php
 6. Shortcode in WordPress Editor
 
 == Changelog ==
+= 1.50 =
+* Added Translation using the standard WordPress method
+* Added Spanish Translation thanks to Carmen in Miami
+* Cleaned up coding to prepare for a rewrite
+
 = 1.45 =
 * Fixes issue where check box uncheck does not save.
 
@@ -132,13 +158,12 @@ To your theme's function.php
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
-= 1.45 =
-Fixes issue where unchecking a check box does not save.
-
+= 1.50 =
+Adds Spanish Translation with capabilities for any language.
 
 == Frequently Asked Questions ==
-How big of an image is the coupon?
+<h4>How big of an image is the coupon?</h4>
 There are two sizes, but the image uploaded should be at least 400 pixels by 200 pixels to display correctly.
 
-What if I have support questions?
+<h4>What if I have support questions?</h4>
 Please use the [Coupon Creator Support Forum](http://wordpress.org/support/plugin/coupon-creator) on WordPress.

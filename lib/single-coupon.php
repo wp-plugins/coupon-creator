@@ -61,7 +61,7 @@ Coustom Template with Basic WordPress loaded no header footer, etc
 						}	?>
 						
 						
-						<div class="cctor_expiration">Expires on:&nbsp;<?php echo $expirationco; ?></div>
+						<div class="cctor_expiration"><?php _e('Expires on:', 'couponcreator'); ?>&nbsp;<?php echo $expirationco; ?></div>
 						
 						
 						<?php } //end if expiration ?>
@@ -71,7 +71,7 @@ Coustom Template with Basic WordPress loaded no header footer, etc
 			<?php } // End the Else ?>
 			
 			<div class="cctor_opencoupon"> <!-- We Need a Click to Print Button -->
-				<a href="javascript:window.print();">Click to Print</a>
+				<a href="javascript:window.print();"><?php _e('Click to Print', 'couponcreator'); ?></a>
 				
 			</div> <!--end .opencoupon -->
 		</div> <!--end #cctor_coupon_container -->
