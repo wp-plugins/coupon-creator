@@ -5,11 +5,11 @@ Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
 Requires at least: 3.6
 Tested up to: 3.8.1
-Stable tag: 1.50
+Stable tag: 1.60
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
-Create coupons and display on your site by using a shortcode. Customize the look or use an image.
+Create coupons to display on your site by using a shortcode.
 
 == Description ==
 
@@ -18,11 +18,9 @@ Create your own coupon with the Coupon Creator for WordPress or upload an image 
 <h4>How to Create a Coupon</h4>
 Create a coupon by going to the coupon custom post type and filling in all the settings in the custom meta box.
 
-Insert the coupon into a post or page using a shortcode.
+Insert the coupon into a post or page using the shortcode inserter above the content Editor.
 
-Coupon displays until the expiration date chosen by you.
-
-If you check the Ignore Expiration Checkbox the coupon will display on the site past the expiration date or with no date at all.
+Coupon displays until the expiration date chosen by you or you can check the Ignore Expiration Checkbox and the coupon will display on the site past the expiration date or with no date at all.
 
 <h4>Coupon Creator Shortcode</h4>
 
@@ -49,7 +47,7 @@ Assign categories to a coupon and with the loop option only display coupons from
 
 category - add the category name to display coupons only from it
 
-For example if you have a category called Coupon Home Page, call it by:
+For example if you have a category called "Coupon Home Page", call it by:
 
 category="Coupon Home Page"
 
@@ -59,11 +57,11 @@ Above the post editor click the "Add Coupon" button to open the inserter.
 
 Select an individual coupon or coupon loop.
 
-If you select coupon loop an option will appear to select a specific category for the loop or leave it blank for all coupons (default).
+If you select the coupon loop, an option will appear to select a coupon category for the loop or you can leave it blank for all coupons (default).
 
 The third option to select is the couponalign.
 
-Once you have all the options selected, press "Insert Coupon" to create the shortcode into the editor.
+Once you have all the options selected, press "Insert Coupon" to insert the shortcode into the editor.
 
 <h4>Examples</h4>
 
@@ -71,7 +69,7 @@ Find examples of coupons on the [Coupon Creator Home Page](http://jesseeproducti
 
 <h4>Coupons in Text Widgets</h4>
 
-Coupons will work in Sidebar Text Widgets, but make sure to add
+Coupons will work in Sidebar Text Widgets, but you must add
 
 add_filter('widget_text', 'do_shortcode');
 
@@ -79,7 +77,7 @@ To your theme's function.php
 
 == Installation ==
 
-1. Upload `/coupon_creator/` to the `/wp-content/plugins/` directory
+1. Upload '/coupon_creator/' to the '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Create a coupon under the coupon custom post type and insert shortcode into content using shortcode
 	[coupon couponid="xx" coupon_align="cctor_aligncenter" name="Coupon Name"]
@@ -94,6 +92,15 @@ To your theme's function.php
 6. Shortcode in WordPress Editor
 
 == Changelog ==
+= 1.60 =
+* Updated Styling to make the coupons more flexible in size
+* Updated and Added Responsive Styling with basic support still for IE7
+* Added a html comment that shows when a coupon is expired
+* Added version numbers to the scripts and stylesheets
+* Added New Q&A to the FAQ
+* Updated Colorbox to 1.4.37
+* Changed the single_template filter to template_include that was causing 404 errors in some themes
+
 = 1.50 =
 * Added Translation using the standard WordPress method
 * Added Spanish Translation thanks to Carmen in Miami
@@ -144,29 +151,33 @@ To your theme's function.php
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
-= 1.50 =
-Adds Spanish Translation with capabilities for any language.
+= 1.60 =
+Adds Responsive Styling and CSS improvements
 
 == Frequently Asked Questions ==
-<h4>How big of an image is the coupon?</h4> There are two sizes, but the image uploaded should be at least 400 pixels by 200 pixels to display correctly.  <h4>What if I have support questions?</h4> Please use the [Coupon Creator Support Forum](http://wordpress.org/support/plugin/coupon-creator) on WordPress.
+<h4>How big of an image is the coupon?</h4> 
+There are two sizes, but the image uploaded should be 400 pixels by 200 pixels to display correctly.  
 
-<h4>How do I customize the coupon (make bigger, change layout, etc…)?</h4>
-There is no direct way to customize the look of the coupon in the WordPress dashboard. All customizations would involve modifying the css, the shortcode loop, and single template. If you are interested in a custom design please contact me about a price. 
+<h4>What if I have support questions?</h4> 
+Please use the [Coupon Creator Support Forum](http://wordpress.org/support/plugin/coupon-creator) on WordPress.
+
+<h4>How do I customize the coupon (make bigger, change layout, etc...)?</h4>
+There is no direct way to customize the look of the coupon in the WordPress dashboard. All customizations would involve modifying the css, the shortcode file, and the single template file. If you are interested in a custom design please contact [Brian](http://jesseeproductions.com/contact/) about a price. 
 
 <h4>Can I have both an image and text in the coupon? </h4>
 You can add html coding to the discount box, but there is no visual editor to do it. 
 
 <h4>My coupon was working and now it does not display, how can I fix it? </h4>
-Please check if the expiration date has passed and whether or not the ignore expiration is checked. If it is checked or the date is still in the future please post on the Support Forum in WordPress about the issue and include a link to the page so I can check for errors. 
+Please check if the expiration date has passed and whether or not the ignore expiration is checked. If it is checked or the date is still in the future, please post on the Support Forum in WordPress about the issue and include a link to the page so I can check for errors. 
 
 <h4>How do I fix 404 Errors on the Print View of the Coupons? </h4>
 The cause of the conflict can be hosting, plugin, or theme related. 
 Try first to resave your permalinks and then check the Print View. 
 If that does not work, try disabling plugins and/or changing the themes and check again. 
-If none of that works it could be an a conflict with the hosting setup. 
+If none of that works, it could be a conflict with the hosting setup. 
 
 <h4>How to do I translate the Coupon Creator? (1.50) </h4>
-To add a translation, please reply to the Translation Post with the language and country you are translating. The post is in the Support Forum and it will be added to the next version of the Coupon Creator.
+To add a translation, please reply to the Translation Post with the language and country. The post is in the Support Forum and it will be added to the next version of the Coupon Creator.
 
 = Please translate the following phrases: =
 *   Click to Print
@@ -181,19 +192,20 @@ To add a translation, please reply to the Translation Post with the language and
 Insert the shortcode in the content editor of a post, page, or custom post type. 
 
 <h4>How can I display coupons using the shortcode in a sidebar text widget? </h4>
-Add this coding to your theme’s function.php:
+Add this coding to your theme's function.php:
 
 add_filter('widget_text', 'do_shortcode');
 
 <h4>How can I prevent coupons from appearing in a site search? </h4>
-By default the coupons are excluded from search, however, if you add coding to show custom post types in the search you would have to exclude the custom post type, cctor_coupon.
+By default the coupons are excluded from search. However, if you add coding to show custom post types in the search, you would have to exclude the custom post type, cctor_coupon.
 
 <h4>How can I remove the Click to Open in Print View or Click to Print Text? </h4>
 You either modify the shortcode and the template file or use CSS to hide the display of either. 
 
 <h4>Does the Coupon Creator have custom capabilities for WordPress users? </h4>
-No, there are no built in capabilities for users. The plugin is designed to work on single sites and not directory sites. 
+No, there are no custom capabilities for users. The plugin is designed to work on single sites and not directory sites. 
 
 <h4>Can I change cctor_coupon in the print view permalink? </h4>
 You may customize the permalink in the coding, but not from the dashboard. I made it that way to reduce conflict and so that a page could use coupon in its permalink. 
+
 

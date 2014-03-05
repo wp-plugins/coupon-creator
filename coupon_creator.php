@@ -2,7 +2,7 @@
 /*
 Plugin name: Coupon Creator
 Plugin URI: http://jesseeproductions.com/coupon_creator/
-Version: 1.50
+Version: 1.60
 Description: This plugin creates a custom post type for coupons with a shortcode to display it on website and a single view template for printing.
 Author: Brian Jessee
 Author URI: http://jesseeproductions.com
@@ -20,9 +20,9 @@ if (!defined('CCTOR_COUPON_VERSION_KEY'))
     define('CCTOR_COUPON_VERSION_KEY', 'cctor_coupon_version');
 
 if (!defined('CCTOR_COUPON_VERSION_NUM'))
-    define('CCTOR_COUPON_VERSION_NUM', '1.50');
+    define('CCTOR_COUPON_VERSION_NUM', '1.60');
 
-$cctor_new_version = '1.50';
+$cctor_new_version = '1.60';
 
 if (get_option(CCTOR_COUPON_VERSION_KEY) != $cctor_new_version) {
     // Then update the version value
@@ -43,7 +43,8 @@ include_once 'lib/cc_coupon_loop_shortcode.php';
  */
 	function cctor_register_style() {
 		if (!is_admin()) {
-		wp_register_style('coupon_creator_css', COUPON_PLUGIN_URL . '/css/cctor_coupon.css', false, '1.0', 'all' );
+			$cctor_style = plugin_dir_path( __FILE__ ).'css/cctor_coupon.css';
+			wp_register_style('coupon_creator_css', plugins_url('/css/cctor_coupon.css' , __FILE__ ), false, filemtime($cctor_style));
 		}
 	}
 	add_action('wp_print_styles', 'cctor_register_style');
@@ -165,19 +166,21 @@ function cctor_activate_rewrite_flush() {
 }
 register_activation_hook( __FILE__, 'cctor_activate_rewrite_flush' );
 
-/**
+/*
  *
  * Use Single Coupon Template from Plugin when creating the print version
  *
- */
-	function get_coupon_post_type_template($print_template) {
-		 global $post;
-		 if ($post->post_type == 'cctor_coupon') {
-			  $print_template = dirname( __FILE__ ) . '/lib/single-coupon.php';
-		 }
-		 return $print_template;
-	}
-	add_filter( "single_template", "get_coupon_post_type_template" ) ;
+*/
+function get_coupon_post_type_template($print_template) {
+	 global $post;
+	 if ($post->post_type == 'cctor_coupon') {
+		  $print_template = dirname( __FILE__ ) . '/lib/single-coupon.php';
+	 }
+	 return $print_template;
+}
+//add_filter( "single_template", "get_coupon_post_type_template" ) ; removed @1.6 instead use template include
+add_filter( 'template_include', 'get_coupon_post_type_template' );
+
 /**
  *
  * Add Coupon Pop Up to Editor
@@ -346,28 +349,46 @@ register_activation_hook( __FILE__, 'cctor_activate_rewrite_flush' );
  * Color Picker coding modifed from Deluxe Tips - http://www.deluxeblogtips.com/meta-box/
  *
  */
-		  // Need some Scripts and Styling for Editing
-		add_action('admin_enqueue_scripts','load_admin_coupon_script_style');
-		    // Only Load Scripts and CSS on Coupon Edit Page
-		   function load_admin_coupon_script_style() {
-			global $pagenow, $typenow;
-			if (empty($typenow) && !empty($_GET['post'])) {
-				$post = get_post($_GET['post']);
-				$typenow = $post->post_type;
-			}
-			if (is_admin() && $pagenow=='post-new.php' OR $pagenow=='post.php' && $typenow=='cctor_coupon') {
-			wp_register_style('cctor_meta_css', COUPON_PLUGIN_URL . '/css/cctor.ui.datepicker.css'); //Date Picker CSS
-			wp_register_style( 'cc_color_css', COUPON_PLUGIN_URL . '/css/cctor_color.css', array( 'farbtastic' )); //Color Picker CSS
-			wp_enqueue_style('cctor_meta_css');
-			wp_enqueue_style( 'cc_color_css');
-			wp_enqueue_style('thickbox');  //Image Upload CSS
-			wp_enqueue_script('jquery-ui-datepicker');  //Load DatePicker JS
-			wp_register_script('cctor_coupon_meta_js', COUPON_PLUGIN_URL . '/js/cctor_coupon_meta.js', array('jquery', 'media-upload','thickbox','farbtastic')); //Load Color Picker and Image Upload JS
-			wp_enqueue_script('cctor_coupon_meta_js');
-			//Color Box For How to Videos
-			wp_enqueue_style('colorbox_jp_css', COUPON_PLUGIN_URL . '/colorbox/colorbox.css');
-			wp_register_script( 'colorbox_jp_js', COUPON_PLUGIN_URL . '/colorbox/jquery.colorbox-min.js', array( 'jquery' ),TRUE );
-			wp_enqueue_script('colorbox_jp_js');
+// Need some Scripts and Styling for Editing
+add_action('admin_enqueue_scripts','load_admin_coupon_script_style');
+// Only Load Scripts and CSS on Coupon Edit Page
+function load_admin_coupon_script_style() {
+	global $pagenow, $typenow;
+	if (empty($typenow) && !empty($_GET['post'])) {
+		$post = get_post($_GET['post']);
+		$typenow = $post->post_type;
+	}
+	if (is_admin() && $pagenow=='post-new.php' OR $pagenow=='post.php' && $typenow=='cctor_coupon') {
+	
+	//Styles
+	//Date Picker CSS
+	$cctor_datapicker_css = plugin_dir_path( __FILE__ ).'css/cctor.ui.datepicker.css';
+	wp_register_style('cctor_meta_css', plugins_url('/css/cctor.ui.datepicker.css' , __FILE__ ), false, filemtime($cctor_datapicker_css));
+	
+	//Color Picker CSS
+	$cctor_colorpicker_css = plugin_dir_path( __FILE__ ).'css/cctor_color.css';
+	wp_register_style('cc_color_css', plugins_url('/css/cctor_color.css' , __FILE__ ), array( 'farbtastic' ), filemtime($cctor_colorpicker_css));
+
+	wp_enqueue_style('cctor_meta_css');
+	wp_enqueue_style('cc_color_css');
+	wp_enqueue_style('thickbox');  //Image Upload CSS
+	
+	//Scripts
+	//Load Color Picker and Image Upload JS
+	$cctor_coupon_meta_js = plugin_dir_path( __FILE__ ).'js/cctor_coupon_meta.js';
+	wp_register_script('cctor_coupon_meta_js',  plugins_url('/js/cctor_coupon_meta.js', __FILE__ ) ,array('jquery', 'media-upload','thickbox','farbtastic'), filemtime($cctor_coupon_meta_js), true);		
+	wp_enqueue_script('cctor_coupon_meta_js');
+	wp_enqueue_script('jquery-ui-datepicker');
+	
+	//Color Box For How to Videos
+	$cctor_colorbox_css = plugin_dir_path( __FILE__ ).'colorbox/colorbox.css';
+	wp_register_style('cctor_colorbox_css', plugins_url('/colorbox/colorbox.css' , __FILE__ ), false, filemtime($cctor_colorbox_css));	
+	
+	$cctor_colorbox_js = plugin_dir_path( __FILE__ ).'colorbox/jquery.colorbox-min.js';
+	wp_register_script('cctor_colorbox_js',  plugins_url('/colorbox/jquery.colorbox-min.js', __FILE__ ) ,array('jquery'), filemtime($cctor_colorbox_js), true);				
+	
+	wp_enqueue_style('cctor_colorbox_css');
+	wp_enqueue_script('cctor_colorbox_js');
 
 			//Load Script if Date Picker Meta Input
 		add_action('admin_head','cc_datepicker_script');
@@ -382,10 +403,8 @@ register_activation_hook( __FILE__, 'cctor_activate_rewrite_flush' );
 			echo $output;
 		}
 
-
-
-			}
-		}
+	}
+}
 
 		// Add the Meta Box
 		function add_coupon_creator_meta_box() {
