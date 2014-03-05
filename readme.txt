@@ -5,7 +5,7 @@ Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
 Requires at least: 3.6
 Tested up to: 3.8.1
-Stable tag: 1.50
+Stable tag: 1.60
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
@@ -152,7 +152,7 @@ To your theme's function.php
 
 == Upgrade Notice ==
 = 1.60 =
-Adds Responsive Styling and other CSS improvements
+Adds Responsive Styling and CSS improvements
 
 == Frequently Asked Questions ==
 <h4>How big of an image is the coupon?</h4> 
