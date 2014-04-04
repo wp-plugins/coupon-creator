@@ -5,7 +5,7 @@ Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
 Requires at least: 3.6
 Tested up to: 3.8.1
-Stable tag: 1.60
+Stable tag: 1.70
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
@@ -14,6 +14,9 @@ Create coupons to display on your site by using a shortcode.
 == Description ==
 
 Create your own coupon with the Coupon Creator for WordPress or upload an image of a coupon instead.
+
+<h4>Coupon Creator Pro - Comming Soon</h4>
+New Features in the works include a visual editor to make coupons, background coupon images, editable link texts, more themes, more control from the settings page, custom css, premium support, and more!
 
 <h4>How to Create a Coupon</h4>
 Create a coupon by going to the coupon custom post type and filling in all the settings in the custom meta box.
@@ -92,6 +95,15 @@ To your theme's function.php
 6. Shortcode in WordPress Editor
 
 == Changelog ==
+= 1.70 =
+* Rewrite of entire plugin to Object-oriented programming
+* Update Color Picker to lastest version
+* Change Image Uploader to the latest version of WordPress Media Uploader
+* Added Setting Page with ability to change slug of coupon permalinks
+* Added custom columns to list view of all coupons
+* Added localization for admin and frontend
+* Replaced deprecated php split function
+
 = 1.60 =
 * Updated Styling to make the coupons more flexible in size
 * Updated and Added Responsive Styling with basic support still for IE7
@@ -151,8 +163,8 @@ To your theme's function.php
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
-= 1.60 =
-Adds Responsive Styling and CSS improvements
+= 1.70 =
+Complete rewrite of the plugin to OOP, requires WordPress 3.6 and PHP 5.2
 
 == Frequently Asked Questions ==
 <h4>How big of an image is the coupon?</h4> 
@@ -206,6 +218,8 @@ You either modify the shortcode and the template file or use CSS to hide the dis
 No, there are no custom capabilities for users. The plugin is designed to work on single sites and not directory sites. 
 
 <h4>Can I change cctor_coupon in the print view permalink? </h4>
-You may customize the permalink in the coding, but not from the dashboard. I made it that way to reduce conflict and so that a page could use coupon in its permalink. 
+With version 1.70 you can change the slug of the permalink in the settings section of the plugin. Found under the Coupon Creator Heading.
 
+<h4>The Coupon Inserter, Image Uploader, the Expiration Date Picker, or the Color Pickers are not working, what is wrong?</h3> 
+Most likely this is a JavaScript error and could be caused by another plugin or your theme. Please check the Developer Console for your browser and see if there is an error. If you post the error on the support forum I maybe able to help. Otherwise try disabling plugins and changing themes to try and find the sources as well. 
 
