@@ -147,7 +147,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 				'cctor_bordercolor'             => FILTER_SANITIZE_STRING,
 				//Coupon Content
 				'cctor_amount'           		=> FILTER_SANITIZE_STRING,
-				'cctor_description'             => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
+				'cctor_description'             => FILTER_FLAG_STRIP_LOW,
 				'cctor_image'           		=> FILTER_SANITIZE_STRING,
 				//Expiration
 				'cctor_expiration'              => FILTER_SANITIZE_STRING,
