@@ -4,7 +4,7 @@ Plugin Name: Coupon Creator
 Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
 Requires at least: 3.6
-Tested up to: 3.8.1
+Tested up to: 3.9 RC1
 Stable tag: 1.70
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
@@ -95,6 +95,13 @@ To your theme's function.php
 6. Shortcode in WordPress Editor
 
 == Changelog ==
+= 1.71 =
+* Fixed sanitize for discount box to enable html
+* Added couponorderby="rand" to shortcode, takes an wp_query options
+* Added line-height to click to print to make styling work better in themes
+* Fixed key constant to correct name
+* Tested with 3.9 RC1
+
 = 1.70 =
 * Rewrite of entire plugin to Object-oriented programming
 * Update Color Picker to lastest version
@@ -163,8 +170,8 @@ To your theme's function.php
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
-= 1.70 =
-Complete rewrite of the plugin to OOP, requires WordPress 3.6 and PHP 5.2
+= 1.71 =
+Bug fixes and compatibility with 3.9
 
 == Frequently Asked Questions ==
 <h4>How big of an image is the coupon?</h4> 
@@ -220,6 +227,6 @@ No, there are no custom capabilities for users. The plugin is designed to work o
 <h4>Can I change cctor_coupon in the print view permalink? </h4>
 With version 1.70 you can change the slug of the permalink in the settings section of the plugin. Found under the Coupon Creator Heading.
 
-<h4>The Coupon Inserter, Image Uploader, the Expiration Date Picker, or the Color Pickers are not working, what is wrong? </h4> 
+<h4>The Coupon Inserter, Image Uploader, the Expiration Date Picker, or the Color Pickers are not working, what is wrong?</h3> 
 Most likely this is a JavaScript error and could be caused by another plugin or your theme. Please check the Developer Console for your browser and see if there is an error. If you post the error on the support forum I maybe able to help. Otherwise try disabling plugins and changing themes to try and find the sources as well. 
 

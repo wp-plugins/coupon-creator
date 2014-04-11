@@ -16,7 +16,7 @@ flush_rewrite_rules();
 	<h2>
 		<?php _e( 'Coupon Creator Settings', 'coupon_creator' ); ?>
 	</h2>
-	<h4>Coupon Creator Version: <?php echo get_option(CCTOR_COUPON_VERSION_KEY); ?></h4>
+	<h4>Coupon Creator Version: <?php echo get_option(CCTOR_VERSION_KEY); ?></h4>
 	<form name="form" action="options.php" method="post">
 		<?php settings_fields( 'coupon_creator' ); ?>
 

@@ -23,15 +23,15 @@
 ------------------------------------------------------------ */
 .cctor_coupon {
 	width:100%;
-	min-height: 150px;	
+	min-height: 150px;
 	padding:5px;
 	border: 3px dashed black;
 }
 .cctor_coupon_image {
 	padding:1%;
-	border: 3px dashed black; 
+	border: 3px dashed black;
 	max-width: 100%;
-}    
+}
 .cctor_coupon_content {
 	position:relative;
 	width:100%;
@@ -48,7 +48,7 @@
 	font-size:24px;
 	font-weight:bold;
 	color: #000;
-}	
+}
 .cctor_deal {
 	width:100%;
 	min-height: 91px;
@@ -56,7 +56,7 @@
 	line-height:18px;
 	font-size:14px;
 	font-weight:bold;
-}	
+}
 .cctor_deal p {
 	margin: 0;
 }
@@ -71,6 +71,7 @@
 	height:20px;
 	margin-top: 10px;
 	font-size:14px;
+	line-height: 20px;
 }
 
 /* Coupon Align
@@ -102,15 +103,15 @@
 .print_coupon .cctor_coupon_content h3 {
 	font-size:30px;
 	min-height: 31px;
-}	
+}
 .print_coupon .cctor_deal {
 	font-size:20px;
 	line-height: 22px;
 	min-height: 149px;
-}	
+}
 @media print {
-.cctor_opencoupon { 
-	display:none !important; 
+.cctor_opencoupon {
+	display:none !important;
 	}
 }
 /* Basic IE7 Support

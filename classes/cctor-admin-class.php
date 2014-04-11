@@ -3,7 +3,7 @@
 if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 	die( 'Access denied.' );
 
-if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {	
+if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 	/*
 	* Coupon Creator Admin Class
 	* @version 1.70
@@ -18,9 +18,9 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 			add_action( 'admin_init', array( __CLASS__, 'admin_upgrade' ) );
 			add_action( 'admin_menu', array( __CLASS__, 'admin_menu' ) );
 		}
-		
+
 	/***************************************************************************/
-		
+
 		/*
 		* Admin Initialize Coupon Creator
 		* @version 1.70
@@ -38,7 +38,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 			add_filter( 'manage_edit-cctor_coupon_columns' ,  array( __CLASS__, 'coupon_columns' ) );
 			//Add Button for Coupons in Editor
 			add_action('media_buttons_context', array( __CLASS__, 'add_cc_coupon_button' ));
-			
+
 			/*
 			* Custom Permalink Slugs
 			* @version 1.70
@@ -51,28 +51,28 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 				'coupon_creator' // page
 			);
 			//Coupon Creator Base
-			add_settings_field( 
+			add_settings_field(
 				'cctor_coupon_base', // id
 				__( 'Coupon Creator Base', 'coupon_creator' ), // title
 				array( __CLASS__, 'input_text' ),  // callback
 				'coupon_creator', // page
-				'coupon_creator_permalinks', // section 
+				'coupon_creator_permalinks', // section
 				array( 'label_for' => 'cctor_coupon_base', 'description_for' => 'default: cctor_coupon' )
 			);
 			//Coupon Taxonomy - not used in 1.70
-			/*add_settings_field( 
+			/*add_settings_field(
 				'cctor_coupon_category_base', // id
 				__( 'Coupon Creator Category Base', 'coupon_creator' ), // title
 				array( __CLASS__, 'input_text' ),  // callback
 				'coupon_creator', // page
-				'coupon_creator_permalinks', // section 
+				'coupon_creator_permalinks', // section
 				array( 'label_for' => 'cctor_coupon_category_base', 'description_for' => 'default: cctor_coupon_category' )
-			);	*/	
-			
+			);	*/
+
 			//Register Options
 			register_setting( 'coupon_creator', 'cctor_coupon_base' );
 			register_setting( 'coupon_creator', 'cctor_coupon_category_base' );
-			
+
 		} //end admin_init
 	/***************************************************************************/
 
@@ -82,13 +82,13 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 	*/
 	function admin_upgrade() {
 		//Update Version Number
-		if (get_option(CCTOR_COUPON_VERSION_KEY) != CCTOR_VERSION_NUM) {
+		if (get_option(CCTOR_VERSION_KEY) != CCTOR_VERSION_NUM) {
 			// Then update the version value
-			update_option(CCTOR_COUPON_VERSION_KEY, CCTOR_VERSION_NUM);
-		} 
+			update_option(CCTOR_VERSION_KEY, CCTOR_VERSION_NUM);
+		}
 	}
-	
-		
+
+
 	/***************************************************************************/
 
 		/*
@@ -147,7 +147,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 				'cctor_bordercolor'             => FILTER_SANITIZE_STRING,
 				//Coupon Content
 				'cctor_amount'           		=> FILTER_SANITIZE_STRING,
-				'cctor_description'             => FILTER_SANITIZE_STRING,
+				'cctor_description'             => FILTER_SANITIZE_FULL_SPECIAL_CHARS,
 				'cctor_image'           		=> FILTER_SANITIZE_STRING,
 				//Expiration
 				'cctor_expiration'              => FILTER_SANITIZE_STRING,
@@ -159,24 +159,24 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 				update_post_meta( $post_id, $key, $value );
 			}
 		}
-		
+
 	/***************************************************************************/
 			/*
 			* Add Coupon Inserter Button Above WordPress Editor
 			* @version 1.00
 			*/
 			public static function add_cc_coupon_button($context) {
-			
+
 				//add Content for inline popup for Coupon Inserter
 				add_action('admin_footer', array( __CLASS__, 'add_coupon_inline_popup' ));
-				
+
 				//path to coupon icon
 				$img = CCTOR_URL . 'admin/images/coupon_creator.png';
 				//the id of the container I want to show in the popup
 				$container_id = 'coupon_container';
 				//our popup's title
 				$title = 'Insert Coupon';
-				
+
 				// display ui button for 3.5 and greater
 				$context .="<style>.cctor_insert_icon{
 							background:url('{$img}') no-repeat top left;
@@ -191,11 +191,11 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 							}
 						 </style>
 							<a class='thickbox button cctor_insert_link' id='add_jp_gallery'  title='{$title}' href='#TB_inline?width=640&inlineId={$container_id}'><span class='cctor_insert_icon'></span>Add Coupon</a>";
-							
+
 				  return $context;
-				  
+
 			} //End Insert Icon Creation
-		
+
 			/*
 			* Coupon Inserter Popup Coding and Script
 			* @version 1.00
@@ -310,7 +310,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 					<?php }  ?>
 				</div> <!--End #coupon_container -->
 			<?php }
-			
+
 	/***************************************************************************/
 
 		/*
@@ -319,42 +319,42 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 		* @param string $hook
 		*/
 		public static function enqueue_style_scripts( $hook_suffix ) {
-				
+
 			$screen = get_current_screen();
 
 			if ( 'cctor_coupon' == $screen->id ) {
-				
+
 				//Styles
 				//Date Picker CSS
 				$coupon_creator_admin = CCTOR_PATH.'admin/css/admin.css';
 				wp_enqueue_style( 'coupon_creator_admin', CCTOR_URL . 'admin/css/admin.css', false, filemtime($coupon_creator_admin));
 				//Style or WP Color Picker
-				wp_enqueue_style( 'wp-color-picker' );  
+				wp_enqueue_style( 'wp-color-picker' );
 				//Image Upload CSS
 				wp_enqueue_style('thickbox');
 
 				//Scripts
 				//Media Manager from 3.5
 				 wp_enqueue_media();
-				 
+
 				//Script for WP Color Picker
 				wp_enqueue_script( 'wp-color-picker' );
 				$cctor_coupon_meta_js = CCTOR_PATH.'admin/js/cctor_coupon_meta.js';
-				wp_enqueue_script('cctor_coupon_meta_js',  CCTOR_URL . '/admin/js/cctor_coupon_meta.js', array('jquery', 'media-upload','thickbox','farbtastic'), filemtime($cctor_coupon_meta_js), true);	
-				
+				wp_enqueue_script('cctor_coupon_meta_js',  CCTOR_URL . '/admin/js/cctor_coupon_meta.js', array('jquery', 'media-upload','thickbox','farbtastic'), filemtime($cctor_coupon_meta_js), true);
+
 				//Script for Datepicker
 				wp_enqueue_script('jquery-ui-datepicker');
-				
+
 				//Color Box For How to Videos
 				$cctor_colorbox_css = CCTOR_PATH.'admin/colorbox/colorbox.css';
-				wp_enqueue_style('cctor_colorbox_css', CCTOR_URL . '/admin/colorbox/colorbox.css', false, filemtime($cctor_colorbox_css));	
-				
+				wp_enqueue_style('cctor_colorbox_css', CCTOR_URL . '/admin/colorbox/colorbox.css', false, filemtime($cctor_colorbox_css));
+
 				$cctor_colorbox_js = CCTOR_PATH.'admin/colorbox/jquery.colorbox-min.js';
 				wp_enqueue_script('cctor_colorbox_js',  CCTOR_URL . '/admin/colorbox/jquery.colorbox-min.js' ,array('jquery'), filemtime($cctor_colorbox_js), true);
-			
+
 			}
-		}	
-		
+		}
+
 		/***************************************************************************/
 
 		/*
@@ -364,27 +364,27 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 		*/
 		public static function coupon_columns( $columns ) {
 			$cctor_columns = array();
-		
+
 			if( isset( $columns['cb'] ) ) {
 				$cctor_columns['cb'] = $columns['cb'];
 			}
-		
+
 			if( isset( $columns['title'] ) ) {
 				$cctor_columns['title'] = __( 'Coupon Title', 'coupon_creator' );
 			}
-		
+
 			if( isset( $columns['author'] ) ) {
 				$cctor_columns['author'] = $columns['author'];
 			}
-		
+
 			$cctor_columns['cctor_coupon_expiration'] = __( 'Expiration Date', 'coupon_creator' );
-		
+
 			$cctor_columns['cctor_coupon_ignore_expiration'] = __( 'Ignore Expiration', 'coupon_creator' );
-		
+
 			if( isset( $columns['date'] ) ) {
 				$cctor_columns['date'] = $columns['date'];
 			}
-			
+
 			return $cctor_columns;
 		}
 		/*
@@ -403,7 +403,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 		}
 
 		/***************************************************************************/
-		
+
 		/*
 		* Admin Menu
 		* @version 1.70
@@ -411,17 +411,17 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 		public static function admin_menu() {
 			// Settings Menu for Admins
 			if ( current_user_can( 'manage_options' ) ) {
-				add_submenu_page( 
+				add_submenu_page(
 					'edit.php?post_type=cctor_coupon', // parent_slug
 					__( 'Coupon Creator Settings', 'coupon_creator' ), // page_title
 					__( 'Settings', 'coupon_creator' ), // menu_title
 					'read', // capability
 					'coupon_creator_settings', // menu_slug
-					array( __CLASS__, 'page_settings' ) // function 
+					array( __CLASS__, 'page_settings' ) // function
 				);
 			}
 		}
-		
+
 		/*
 		* Setting Section
 		* @version 1.70
@@ -429,7 +429,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 		public static function settings_section() {
 			//Empty Callback
 		}
-		
+
 		/*
 		* Setting Input Text
 		* @version 1.70
@@ -437,7 +437,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 		*/
 		public static function input_text( $args ) {
 			printf(
-				'<input name="%s" id="%s" type="text" value="%s" class="%s" /><br><span class="description">%s</span>', 
+				'<input name="%s" id="%s" type="text" value="%s" class="%s" /><br><span class="description">%s</span>',
 				esc_attr( $args['label_for'] ),
 				esc_attr( $args['label_for'] ),
 				esc_attr( get_option( $args['label_for'] ) ),
@@ -447,7 +447,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 		}
 
 		/***************************************************************************/
-		
+
 		/*
 		* Include Admin File
 		* @version 1.70
@@ -462,10 +462,10 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 		/*
 		* Settings Page
 		* @version 1.70
-		*/	
+		*/
 		function page_settings() {
 			include CCTOR_PATH . 'admin/settings.php';
 		}
 	} //end Coupon_Creator_Plugin_Admin Class
-	
+
 } // class_exists( 'Coupon_Creator_Plugin_Admin' )
