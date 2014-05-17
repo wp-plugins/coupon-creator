@@ -4,8 +4,8 @@ Plugin Name: Coupon Creator
 Plugin URI: http://jesseeproductions.com/coupon-creator/
 Tags: custom post type, coupon, shortcode
 Requires at least: 3.6
-Tested up to: 3.9
-Stable tag: 1.72
+Tested up to: 3.9.1
+Stable tag: 1.73
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
@@ -95,7 +95,10 @@ To your theme's function.php
 6. Shortcode in WordPress Editor
 
 == Changelog ==
-= 1.71 =
+= 1.73 =
+* Added French Translation, thanks to creacomdesign
+
+= 1.72 =
 * Fixed sanitize for discount box to enable html
 * Added couponorderby="rand" to shortcode, takes an wp_query options
 * Added line-height to click to print to make styling work better in themes
@@ -170,8 +173,9 @@ To your theme's function.php
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
-= 1.71 =
-Bug fixes and compatibility with 3.9
+= 1.73 =
+Adds French Translation, thanks to creacomdesign
+
 
 == Frequently Asked Questions ==
 <h4>How big of an image is the coupon?</h4> 
