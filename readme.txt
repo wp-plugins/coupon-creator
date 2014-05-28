@@ -231,6 +231,6 @@ No, there are no custom capabilities for users. The plugin is designed to work o
 <h4>Can I change cctor_coupon in the print view permalink? </h4>
 With version 1.70 you can change the slug of the permalink in the settings section of the plugin. Found under the Coupon Creator Heading.
 
-<h4>The Coupon Inserter, Image Uploader, the Expiration Date Picker, or the Color Pickers are not working, what is wrong?</h3> 
+<h4>The Coupon Inserter, Image Uploader, the Expiration Date Picker, or the Color Pickers are not working, what is wrong?</h4>
 Most likely this is a JavaScript error and could be caused by another plugin or your theme. Please check the Developer Console for your browser and see if there is an error. If you post the error on the support forum I maybe able to help. Otherwise try disabling plugins and changing themes to try and find the sources as well. 
 
