@@ -37,9 +37,12 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 
 			add_action( 'init',   array( __CLASS__, 'init' ) );
 
-			Coupon_Creator_Plugin_Admin::bootstrap();
 			//Localization
 			add_action('plugins_loaded', array( __CLASS__, 'i18n' ));
+
+			//Load Admin Class if in Admin Section
+			if ( is_admin() )
+			Coupon_Creator_Plugin_Admin::bootstrap();
 		}
 
 	/***************************************************************************/
@@ -54,7 +57,7 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 			require_once CCTOR_PATH. 'inc/taxonomy.php';
 
 			// if no custom slug use this base slug
-			$slug = get_option( 'cctor_coupon_base' );
+			$slug = coupon_options('cctor_coupon_base');
 			$slug = empty( $slug ) ? _x( 'cctor_coupon', 'slug', 'coupon_creator' ) : $slug;
 
 			//Coupon Creator Custom Post Type
@@ -95,13 +98,17 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 			coupon_creator_create_taxonomies();
 
 			//Register Coupon Style
-			add_action('wp_print_styles',  array( __CLASS__, 'cctor_register_style' ));
+			add_action('wp_enqueue_scripts',  array( __CLASS__, 'cctor_register_style' ));
+			//Add Inline Style from Options
+			add_action( 'wp_enqueue_scripts', array( __CLASS__, 'cctor_inline_style' ), 100);
 			//Setup Coupon Image Sizes
 			add_action( 'init',  array( __CLASS__, 'cctor_add_image_sizes' ) );
 			//Create the Shortcode
 			add_shortcode( 'coupon', array(  __CLASS__, 'cctor_allcoupons_shortcode' ) );
 			//Load Single Coupon Template
 			add_filter( 'template_include', array(  __CLASS__, 'get_coupon_post_type_template') );
+			//Add Settings Link on Plugin Activation Page
+			add_action('coupon_print_head', array( __CLASS__, 'print_css' ));				
 		}
 
 	/***************************************************************************/
@@ -141,10 +148,22 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 		public static function cctor_register_style() {
 			if (!is_admin()) {
 				$cctor_style = CCTOR_PATH.'css/cctor_coupon.css';
-				wp_register_style('coupon_creator_css',  CCTOR_URL . '/css/cctor_coupon.css', false, filemtime($cctor_style));
+				wp_register_style('coupon_creator_css',  CCTOR_URL . 'css/cctor_coupon.css', false, filemtime($cctor_style));
 			}
 		}
-
+		/*
+		* Add Inline Style From Coupon Options
+		* @version 1.80
+		*/		
+		public static function cctor_inline_style() {
+			
+			if (coupon_options('cctor_custom_css')) {
+				$cctor_option_css = coupon_options('cctor_custom_css');
+			
+				wp_add_inline_style( 'coupon_creator_css', $cctor_option_css );
+				
+			}
+		}
 		/*
 		* Register Coupon Creator Image Sizes
 		* @version 1.00
@@ -162,6 +181,7 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 		public static function cctor_allcoupons_shortcode($atts) {
 			   //Load Stylesheet for Coupon Creator when Shortcode Called
 				 wp_enqueue_style('coupon_creator_css');
+				 
 			   //Coupon ID is the Custom Post ID
 			   extract(shortcode_atts(array(
 				"totalcoupons" => '-1',
@@ -203,6 +223,23 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 				$permalink = get_permalink( $couponid );
 				$descriptionco = get_post_meta($couponid, 'cctor_description', true);
 				$daymonth_date_format = get_post_meta($couponid, 'cctor_date_format', true); //get the ignore expiration checkbox value
+				
+				//Build Click to Print Link - First Check if Option to Hide is Checked
+				if (coupon_options('cctor_hide_print_link') == 0) {
+					$nofollow = "";
+					if (coupon_options('cctor_nofollow_print_link') == 1) {
+						$nofollow = "rel='nofollow'";
+					}
+					//Set Image Link
+					$couponimglink = "<a target='_blank' ".$nofollow." href='".$permalink."' title='Click to Open in Print View'><img class='cctor_coupon_image' src='".$couponimage."' alt='".get_the_title()."' title='Coupon ".get_the_title()."'></a>";
+				
+					$clicktoprintlink =	"<div class='cctor_opencoupon'><a ".$nofollow." href='".$permalink." 'onclick='window.open(this.href);return false;'>".__('Click to Open in Print View','coupon_creator')."</a></div><!--end .opencoupon -->";
+					
+				} else {
+					//No Links for Image Coupon or Click to Print
+					$couponimglink = "<img class='cctor_coupon_image' src='".$couponimage."' alt='".get_the_title()."' title='Coupon ".get_the_title()."'>";
+					$clicktoprintlink =	"";
+				}				
 				//Check Expiration if past date then exit
 				$cc_blogtime = current_time('mysql');
 				list( $today_year, $today_month, $today_day, $hour, $minute, $second ) = preg_split( '([^0-9])', $cc_blogtime );
@@ -210,12 +247,13 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 				$cc_expiration_date = strtotime($expirationco);
 				$ignore_expiration = get_post_meta($couponid, 'cctor_ignore_expiration', true); //get the ignore expiration checkbox value
 
-				if ($cc_expiration_date >= $cc_today || $ignore_expiration == "on" ) { // Display coupon if expiration date is in future or if ignore box checked
+				if ($cc_expiration_date >= $cc_today || $ignore_expiration == 1 ) { // Display coupon if expiration date is in future or if ignore box checked
 					//Start Single View
 					$alloutput .=  "<div class='cctor_coupon_container ". $coupon_align ."'>";
 						// If Image Use as Coupon
 						if ($couponimage) {
-						$alloutput .=  "<a target='_blank' href='".$permalink."' title='Click to Open in Print View'><img class='cctor_coupon_image' src='".$couponimage."' alt=''title=''></a>";
+						
+						$alloutput .=  $couponimglink;
 
 						//No Image Create Coupon
 						} else {
@@ -224,7 +262,7 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 						$alloutput .=  "<h3 style='background-color:".$colordiscount."!important; color:".$colorheader."!important;'>" . $amountco . "</h3>";
 						$alloutput .=	"<div class='cctor_deal'>".$descriptionco."</div>";
 						if ($expirationco) {  // Only Display Expiration if Date
-							if ($daymonth_date_format == "on" ) { //Change to Day - Month Style
+							if ($daymonth_date_format == 1 ) { //Change to Day - Month Style
 								$expirationco = date("d/m/Y", $cc_expiration_date);
 							}
 						$alloutput .=	"<div class='cctor_expiration'>".__('Expires on:','coupon_creator')."&nbsp;".$expirationco."</div>";
@@ -232,7 +270,7 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 						$alloutput .=	"</div> <!--end .coupon --></div> <!--end .cctor_coupon -->";
 						}
 					//Add Link to Open in Print View
-					$alloutput .=	"<div class='cctor_opencoupon'><a rel='coupon' href='".$permalink." 'onclick='window.open(this.href);return false;'>".__('Click to Open in Print View','coupon_creator')."</a></div><!--end .opencoupon -->";
+					$alloutput .=	$clicktoprintlink;
 					$alloutput .= 	"</div><!--end .cctor_coupon_container -->";
 				} else {
 					$alloutput .=  "<!-- ".get_the_title()." has expired on ".$expirationco." -->";
@@ -262,5 +300,24 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 
 	/***************************************************************************/
 
+		/*
+		* Hook Custom CSS into Print Template
+		* @version 1.80
+		* @param string $file
+		*/
+		public static function print_css(  ) {
+		
+			if (coupon_options('cctor_custom_css')) {
+				ob_start(); ?>
+				<!-- User Coupon Style from the options Page -->
+					<style type='text/css'>
+						<?php echo coupon_options('cctor_custom_css'); ?>
+					</style>
+				<?php echo ob_get_clean();
+			}
+		}
+		
+	/***************************************************************************/		
+	
 	} //end Coupon_Creator_Plugin Class
 

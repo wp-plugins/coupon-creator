@@ -2,7 +2,7 @@
 /*
 Plugin Name: Coupon Creator
 Plugin URI: http://jesseeproductions.com/coupon_creator/
-Version: 1.73
+Version: 1.80 Beta
 
 Description: This plugin creates a custom post type for coupons with a shortcode to display it on website and a single view template for printing.
 
@@ -21,14 +21,14 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 
 /*
 * Coupon Creator Minimum Requirements
-* @version 1.70
+* @version 1.80
 */
 if (!defined('CCTOR_PATH'))				define( 'CCTOR_PATH',	plugin_dir_path( __FILE__ ));
 if (!defined('CCTOR_URL'))				define( 'CCTOR_URL',	plugin_dir_url( __FILE__ ));
 if (!defined('CCTOR_MIN_PHP_VERSION'))	define( 'CCTOR_MIN_PHP_VERSION',	'5.2');
 if (!defined('CCTOR_MIN_WP_VERSION'))	define( 'CCTOR_MIN_WP_VERSION',		'3.6');
 if (!defined('CCTOR_VERSION_KEY')) 		define( 'CCTOR_VERSION_KEY', 	'cctor_coupon_version');
-if (!defined('CCTOR_VERSION_NUM'))  	define( 'CCTOR_VERSION_NUM', 	'1.73');
+if (!defined('CCTOR_VERSION_NUM'))  	define( 'CCTOR_VERSION_NUM', 	'1.80');
 
 /*
 * Check Requirements for WordPress and PHP
@@ -52,9 +52,8 @@ function cctor_requirements() {
 function cctor_error_requirements() {
 	global $wp_version;
 	$class = 'error';
-
-	?>
-    <div class="updated">
+	ob_start(); ?>
+    <div class="error">
 
 		<?php if( version_compare( PHP_VERSION, CCTOR_MIN_PHP_VERSION, '<' ) ) { ?>
 			<p><?php _e( 'Coupon Creator Requires PHP version: '.CCTOR_MIN_PHP_VERSION . ' You currently have PHP version: '.PHP_VERSION.'', 'coupon_creator' ); ?></p>
@@ -65,17 +64,30 @@ function cctor_error_requirements() {
 		<?php } ?>
 
     </div>
-<?php }
+<?php echo ob_get_clean();
+}
 
 // Check requirements and load files if met
 if	( cctor_requirements() ) {
-		
+
 		// Main Class
 		require_once( dirname( __FILE__ ) . '/classes/cctor-coupon-class.php' );
 		//Admin Class
-		require_once( dirname( __FILE__ ) . '/classes/cctor-admin-class.php' );
+		require_once( dirname( __FILE__ ) . '/admin/cctor-admin-class.php' );
+		//Admin Options Class
+		//require_once( dirname( __FILE__ ) . '/admin/cctor-admin-options-class.php' );
 		//Coupon Creator Start!
 		Coupon_Creator_Plugin::bootstrap( __FILE__ );
+		
+		//Coupon Options echo coupon_options('cctor_coupon_base');
+		function coupon_options( $option ) {
+			$options = get_option( 'coupon_creator_option' );
+			
+			if ( isset( $options[$option] ) )
+				return $options[$option];
+			else
+				return false;
+		}		
 
 } else {
 

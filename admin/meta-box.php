@@ -78,9 +78,6 @@ $coupon_creator_meta_fields = array(
 );
 
 global $post;
-// Use nonce for verification
-//echo '<input type="hidden" name="coupon_creator_meta_box_nonce" value="'.wp_create_nonce(basename(__FILE__)).'" />';
-
 	// Begin the field table and loop
 	echo '<table class="form-table">';
 	foreach ($coupon_creator_meta_fields as $field) {

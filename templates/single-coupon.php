@@ -8,13 +8,20 @@ Custom Template with Basic WordPress loaded no header footer, etc
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>" />
 	<meta name="viewport" content="width=device-width">
+	
+	<?php 
+		//Add nofollow and noindex if option checked
+		if (coupon_options('cctor_nofollow_print_template') == 1) { ?>
+		<meta name="robots" content="noindex,nofollow"/>
+	<?php }?>
+	
 	<title><?php echo get_the_title(); ?></title>
 	<link rel="profile" href="http://gmpg.org/xfn/11" />
 	
 	<?php $coupon_url_dir = plugins_url(); // Declare Plugin Directory ?>
 	
 	<!--Make Background White to Print Coupon -->
-	<style>
+	<style type='text/css'>
 		body {
 			background-color: #fff;
 			background-image: none;
@@ -28,6 +35,11 @@ Custom Template with Basic WordPress loaded no header footer, etc
 		$cctor_style = $cctor_style.'css/cctor_coupon.css';
 	?>
 	<link rel='stylesheet' id='coupon-style-css'  href='<?php echo $coupon_url_dir; ?>/coupon-creator/css/cctor_coupon.css?<?php echo filemtime($cctor_style); ?>' type='text/css' media='all' />  
+	
+	<?php 
+		//Print Template Hook 
+		do_action( 'coupon_print_head' );
+	?>
 </head>	
 	
 	
@@ -41,7 +53,7 @@ Custom Template with Basic WordPress loaded no header footer, etc
 		$ignore_expiration = get_post_meta($post->ID, 'cctor_ignore_expiration', true); //get the ignore expiration checkbox value
 		$daymonth_date_format = get_post_meta($post->ID, 'cctor_date_format', true); //get the ignore expiration checkbox value
 		
-		if ($cc_expiration_date >= $cc_today || $ignore_expiration == "on" ) {  // Display coupon if expiration date is in future or if ignore box checked
+		if ($cc_expiration_date >= $cc_today || $ignore_expiration == 1 ) {  // Display coupon if expiration date is in future or if ignore box checked
 		
 			$couponimage_id = get_post_meta($post->ID, 'cctor_image', true); // Get Image Meta 
 			$couponimage = wp_get_attachment_image_src($couponimage_id, 'print_coupon'); //Get Right Size Image for Print Template
@@ -63,7 +75,7 @@ Custom Template with Basic WordPress loaded no header footer, etc
 						
 						<div class="cctor_deal"><?php echo get_post_meta($post->ID, 'cctor_description', true);  ?></div>
 						<?php if ($expirationco) { // Only Display Expiration if Date 
-						if ($daymonth_date_format == "on" ) { //Change to Day - Month Style
+						if ($daymonth_date_format == 1 ) { //Change to Day - Month Style
 						$expirationco = date("d-m-Y", $cc_expiration_date); 
 						}	?>
 						
