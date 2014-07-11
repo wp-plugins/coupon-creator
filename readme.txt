@@ -184,7 +184,7 @@ New Features in the works include a visual editor to make coupons, background co
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
-= 1.80 =
+= 1.81 =
 New options added including custom css on the Options Panel, plus bug fixes and improved coding.
 If you set a custom permalink, go to the options page and add it back to the options page and resave for it to work. 
 
