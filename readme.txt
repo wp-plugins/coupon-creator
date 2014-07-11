@@ -15,9 +15,6 @@ Create coupons to display on your site by using a shortcode.
 
 Create your own coupon with the Coupon Creator for WordPress or upload an image of a coupon instead.
 
-<h4>Coupon Creator Pro - Comming Soon</h4>
-New Features in the works include a visual editor to make coupons, background coupon images, editable link texts, more themes, more control from the settings page, custom css, premium support, and more!
-
 <h4>How to Create a Coupon</h4>
 Create a coupon by going to the coupon custom post type and filling in all the settings in the custom meta box.
 
@@ -85,6 +82,10 @@ On the options page set default colors for new coupons.
 Also options for nofollow on the links and templates along with an option to hide the click to print link. 
 
 With Version 1.80 you can add custom css in the options and it will modify both the shortcode coupon and the print template. 
+
+<h4>Coupon Creator Pro - Comming Soon</h4>
+New Features in the works include a visual editor to make coupons, background coupon images, editable link texts, more themes, more control from the settings page, custom css, premium support, and more!
+
 
 == Installation ==
 
