@@ -60,9 +60,7 @@ if ( ! class_exists( 'Coupon_Creator_Meta_Box' ) ) {
 				wp_nonce_field( 'coupon_creator_save_post', 'coupon_creator_nonce' );
 				
 				$coupon_creator_meta_fields = self::metabox_options();
-				
-				ob_clean();
-				
+							
 				ob_start(); ?>
 	
 				<table class="form-table">
@@ -100,7 +98,7 @@ if ( ! class_exists( 'Coupon_Creator_Meta_Box' ) ) {
 								// checkbox 
 								case 'checkbox': ?>
 								
-									<input type="checkbox" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" <?php echo checked( $meta, 1, false ) ; ?>/><label for="<?php echo $field['id']; ?>"><?php echo $field['desc']; ?></label>';
+									<input type="checkbox" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" <?php echo checked( $meta, 1, false ); ?>/><label for="<?php echo $field['id']; ?>"><?php echo $field['desc']; ?></label>
 									
 								<?php break;
 								// image using Media Manager from WP 3.5 and greater
@@ -289,32 +287,45 @@ if ( ! class_exists( 'Coupon_Creator_Meta_Box' ) ) {
 			if ( !current_user_can( 'edit_post', $post->ID ) )
 				return;
 			
-		
-			// Save data
-				
+			
+				// Save data
 				//Get Meta Fields
 				$coupon_creator_meta_fields = self::metabox_options();
 				
 				//For Each Field Sanitize the Post Data
 				foreach ( $coupon_creator_meta_fields as $option ) {
+
+					//If No CheckBox Sent, then delete meta
+					if ($option['type'] == 'checkbox' ) {
+						
+						$coupon_meta_checkbox = get_post_meta($post_id, $option['id'], true);
+						
+						if ($coupon_meta_checkbox && ! isset( $_POST[$option['id']] ) ) {
+							delete_post_meta($post_id,  $option['id']);
+						}	
+						
+					} 
 					
 					// Sanitization Filter for each Meta Field Type
-					if ( has_filter( 'cctor_sanitize_' . $option['type'] ) ) {
-						$clean[$option['id']] = apply_filters( 'cctor_sanitize_' . $option['type'], $_POST[$option['id']], $option );
+					if(isset($_POST[$option['id']])){
+						if ( has_filter( 'cctor_sanitize_' . $option['type'] ) ) {
+							$clean[$option['id']] = apply_filters( 'cctor_sanitize_' . $option['type'], $_POST[$option['id']], $option );
+						}	
 					}
 						
 				}				
 				
-			//Loop Through Sanitized Data and Save to MetaBox if different from existing
-			foreach ($clean as $key => $value ) {
-					$old = get_post_meta($post_id, $key, true);
-					$new = $value;
-					if ($new && $new != $old) {
-						update_post_meta($post_id, $key, $new);
-					} elseif ('' == $new && $old) {
-						delete_post_meta($post_id, $key, $old);
-					}
-			} 
+				//Loop Through Sanitized Data and Save to MetaBox if different from existing
+				foreach ($clean as $key => $value ) {
+						$old = get_post_meta($post_id, $key, true);
+						$new = $value;
+						if ($new && $new != $old) {
+							update_post_meta($post_id, $key, $new);
+						} elseif ('' == $new && $old) {
+							delete_post_meta($post_id, $key, $old);
+						}
+				} 
+			
 			
 		}
 		

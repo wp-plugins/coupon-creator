@@ -39,7 +39,7 @@
 }
 .cctor_coupon_content h3 {
 	width: 100%;
-	min-height: 42px;
+	min-height: 45px;
 	padding:2%;
 	margin: 0px;
 	background: #ffa300;
@@ -49,19 +49,20 @@
 }
 .cctor_deal {
 	width:100%;
-	min-height: 91px;
+	min-height: 90px;
 	padding: 2% 3%;
 	line-height:18px;
 	font-size:14px;
 	font-weight:bold;
+	color: #000;
 }
 .cctor_deal p {
 	margin: 0;
 }
 .cctor_expiration  {
 	width:100%;
+	min-height: 15px;
 	font-size:10px;
-	min-height: 16px;
 	font-weight:bold;
 }
 .cctor_opencoupon  {
@@ -100,12 +101,11 @@
 }
 .print_coupon .cctor_coupon_content h3 {
 	font-size:30px;
-	min-height: 31px;
 }
 .print_coupon .cctor_deal {
-	font-size:20px;
+	font-size:  20px;
 	line-height: 22px;
-	min-height: 149px;
+	min-height: 150px;
 }
 @media print {
 .cctor_opencoupon {

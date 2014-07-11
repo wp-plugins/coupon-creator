@@ -2,7 +2,7 @@
 /*
 Plugin Name: Coupon Creator
 Plugin URI: http://jesseeproductions.com/coupon_creator/
-Version: 1.80 Beta
+Version: 1.80
 
 Description: This plugin creates a custom post type for coupons with a shortcode to display it on website and a single view template for printing.
 
@@ -74,20 +74,22 @@ if	( cctor_requirements() ) {
 		require_once( dirname( __FILE__ ) . '/classes/cctor-coupon-class.php' );
 		//Admin Class
 		require_once( dirname( __FILE__ ) . '/admin/cctor-admin-class.php' );
-		//Admin Options Class
-		//require_once( dirname( __FILE__ ) . '/admin/cctor-admin-options-class.php' );
+
 		//Coupon Creator Start!
 		Coupon_Creator_Plugin::bootstrap( __FILE__ );
 		
+		register_activation_hook( __FILE__, array('Coupon_Creator_Plugin', 'activate') );
+		register_deactivation_hook(  __FILE__, array( 'Coupon_Creator_Plugin', 'deactivate' ) );
+
 		//Coupon Options echo coupon_options('cctor_coupon_base');
 		function coupon_options( $option ) {
-			$options = get_option( 'coupon_creator_option' );
-			
+			$options = get_option( 'coupon_creator_options' );
+
 			if ( isset( $options[$option] ) )
 				return $options[$option];
 			else
 				return false;
-		}		
+		}
 
 } else {
 

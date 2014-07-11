@@ -9,14 +9,6 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 */
 
 /*
-* Sanitize Dimensions
-* @version 1.80
-*/	
-add_filter( 'cctor_sanitize_dimensions', 'sanitize_text_field' );
-
-
-	
-/*
 * Sanitize Text
 * @version 1.80
 */	
@@ -25,14 +17,13 @@ add_filter( 'cctor_sanitize_text', 'sanitize_text_field' );
 /*
 * Sanitize Textarea
 * @version 1.80
-*/	
-function cctor_sanitize_textarea(  $input) {
+*/
+add_filter( 'cctor_sanitize_textarea', 'cctor_sanitize_textarea' );
+function cctor_sanitize_textarea( $input) {
 	global $allowedtags;
-	$textarea = wp_kses( $input, $allowedposttags);
+	$textarea = wp_kses( $input, $allowedtags);
 	return $textarea;
 }
-
-add_filter( 'cctor_sanitize_textarea', 'cctor_sanitize_textarea' );
 
 /*
 * Select and Radio Sanitize
@@ -156,3 +147,17 @@ add_filter( 'cctor_sanitize_color', 'cctor_sanitize_hex' );
 * @version 1.80
 */	
 add_filter( 'cctor_sanitize_date', 'sanitize_text_field' );
+
+/*
+* Sanitize Dimensions
+* @version 1.80
+*/	
+add_filter( 'cctor_sanitize_dimensions', 'sanitize_dimension_field' );
+function sanitize_dimension_field( $input, $default = "") {
+	//If Number and Positive
+	if (is_numeric($input) && $input >= 0 ) {
+		return $input;
+	} else {
+		return $default;
+	} 
+}

@@ -37,10 +37,6 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 		* @version 1.70
 		*/
 		public static function admin_init() {
-			//Setup Coupon Meta Boxes
-			//add_action( 'add_meta_boxes', array( __CLASS__, 'add_meta_boxes' ) );
-			//Save Meta Boxes Data
-			//add_action( 'save_post', array( __CLASS__, 'save_coupon_creator_meta' ),50, 2 );
 			//Load Admin Coupon Scripts
 			add_action( 'admin_enqueue_scripts', array( __CLASS__, 'enqueue_style_scripts' ) );
 			//Add Column Headers
@@ -339,7 +335,9 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 					echo get_post_meta( $post_id, 'cctor_expiration', true );
 					break;
 				case 'cctor_coupon_ignore_expiration':
-					echo get_post_meta( $post_id, 'cctor_ignore_expiration', true );
+					if (get_post_meta( $post_id, 'cctor_ignore_expiration', true ) == 1) {
+						echo "Yes";
+					}
 					break;
 			}
 		}

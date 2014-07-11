@@ -2,8 +2,7 @@
 //If Direct Access Kill the Script
 if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 	die( 'Access denied.' );
-
-
+	
 	/*
 	* Coupon Creator Class
 	* @version 1.70
@@ -31,14 +30,17 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 		public static function bootstrap( $file ) {
 			self::$file    = $file;
 			self::$dirname = dirname( $file );
-
-			register_activation_hook( $file, array( __CLASS__, 'activate' ) );
-			register_deactivation_hook( $file, array( __CLASS__, 'deactivate' ) );
-
+			
+			//Register Post Type			
+			add_action( 'init', array( __CLASS__, 'register_post_types' ) );
+			
 			add_action( 'init',   array( __CLASS__, 'init' ) );
 
 			//Localization
 			add_action('plugins_loaded', array( __CLASS__, 'i18n' ));
+			
+			//Setup Coupon Image Sizes
+			add_action( 'init',  array( __CLASS__, 'cctor_add_image_sizes' ) );
 
 			//Load Admin Class if in Admin Section
 			if ( is_admin() )
@@ -52,8 +54,34 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 		* @version 1.70
 		*/
 		public static function init() {
+			
+			//Register Coupon Style
+			add_action('wp_enqueue_scripts',  array( __CLASS__, 'cctor_register_style' ));
+			//Add Inline Style from Options
+			add_action( 'wp_enqueue_scripts', array( __CLASS__, 'cctor_inline_style' ), 100);
+			//Setup Coupon Image Sizes
+			//add_action( 'init',  array( __CLASS__, 'cctor_add_image_sizes' ) );
+			//Create the Shortcode
+			add_shortcode( 'coupon', array(  __CLASS__, 'cctor_allcoupons_shortcode' ) );
+			//Load Single Coupon Template
+			add_filter( 'template_include', array(  __CLASS__, 'get_coupon_post_type_template') );
+			//Print Template Inline Custom CSS from Option
+			add_action('coupon_print_head', array( __CLASS__, 'print_css' ), 100);				
+		}
 
-			//Load Files
+	/***************************************************************************/
+
+	public static function i18n() {
+
+	   $cctor_local_path = dirname( plugin_basename( self::$file ) ) . '/languages/';
+       load_plugin_textdomain('coupon_creator', false, $cctor_local_path );
+
+	}
+	/***************************************************************************/
+	
+	public static function register_post_types() {
+
+		//Load Files
 			require_once CCTOR_PATH. 'inc/taxonomy.php';
 
 			// if no custom slug use this base slug
@@ -96,47 +124,24 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 
 			//Load Coupon Creator Custom Taxonomy
 			coupon_creator_create_taxonomies();
-
-			//Register Coupon Style
-			add_action('wp_enqueue_scripts',  array( __CLASS__, 'cctor_register_style' ));
-			//Add Inline Style from Options
-			add_action( 'wp_enqueue_scripts', array( __CLASS__, 'cctor_inline_style' ), 100);
-			//Setup Coupon Image Sizes
-			add_action( 'init',  array( __CLASS__, 'cctor_add_image_sizes' ) );
-			//Create the Shortcode
-			add_shortcode( 'coupon', array(  __CLASS__, 'cctor_allcoupons_shortcode' ) );
-			//Load Single Coupon Template
-			add_filter( 'template_include', array(  __CLASS__, 'get_coupon_post_type_template') );
-			//Add Settings Link on Plugin Activation Page
-			add_action('coupon_print_head', array( __CLASS__, 'print_css' ));				
-		}
-
-	/***************************************************************************/
-
-	public static function i18n() {
-
-	   $cctor_local_path = dirname( plugin_basename( self::$file ) ) . '/languages/';
-       load_plugin_textdomain('coupon_creator', false, $cctor_local_path );
-
-	}
-
+			
+	}	
+	
 	/***************************************************************************/
 		/**
 		 * Activate
 		 */
-		public static function activate() {
-			// Flush rewrite rules on activation
-			// @see https://codex.wordpress.org/Function_Reference/flush_rewrite_rules
-			add_action( 'init', 'flush_rewrite_rules', 20 );
+		public static function activate() {	
+			// Flush rewrite rules so that users can access custom post types on the
+			self::register_post_types();
+			flush_rewrite_rules();
 		}
 
 		/**
 		 * Deactivate
 		 */
 		public static function deactivate() {
-			// Flush rewrite rules on deactivation
-			// @see https://codex.wordpress.org/Function_Reference/flush_rewrite_rules
-			add_action( 'init', 'flush_rewrite_rules', 20 );
+			flush_rewrite_rules();
 		}
 
 	/***************************************************************************/
@@ -157,20 +162,39 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 		*/		
 		public static function cctor_inline_style() {
 			
-			if (coupon_options('cctor_custom_css')) {
-				$cctor_option_css = coupon_options('cctor_custom_css');
-			
-				wp_add_inline_style( 'coupon_creator_css', $cctor_option_css );
+			$cctor_option_css = "";
+			/* 
+			*  Filter the Dimensions and Min Height
+			*/
+			if(has_filter('cctor_filter_inline_css')) {
+				$coupon_css = "";
 				
+				$cctor_option_css = apply_filters('cctor_filter_inline_css', $coupon_css);
+			} 
+			//Add Custom CSS from Options				
+			if (coupon_options('cctor_custom_css')) {
+					
+				$cctor_option_css .= coupon_options('cctor_custom_css');				
 			}
+			
+			wp_add_inline_style( 'coupon_creator_css', $cctor_option_css );
 		}
 		/*
 		* Register Coupon Creator Image Sizes
 		* @version 1.00
 		*/
 		public static function cctor_add_image_sizes() {
-			add_image_size('single_coupon', 300, 150, TRUE);
-			add_image_size('print_coupon', 400, 200, TRUE);
+		
+			$cctor_img_size = array();
+			$cctor_img_size['single'] = 300;
+			$cctor_img_size['print']  = 400;
+
+			if(has_filter('cctor_img_size')) {
+				$cctor_img_size = apply_filters('cctor_img_size', $cctor_img_size);
+			} 
+
+			add_image_size('single_coupon', $cctor_img_size['single'] );
+			add_image_size('print_coupon', $cctor_img_size['print'] );
 		}
 
 	/***************************************************************************/
@@ -180,8 +204,9 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 		*/
 		public static function cctor_allcoupons_shortcode($atts) {
 			   //Load Stylesheet for Coupon Creator when Shortcode Called
+			   if( !wp_style_is( 'coupon_creator_css' ) ) {
 				 wp_enqueue_style('coupon_creator_css');
-				 
+			   }	 
 			   //Coupon ID is the Custom Post ID
 			   extract(shortcode_atts(array(
 				"totalcoupons" => '-1',
@@ -238,7 +263,7 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 				} else {
 					//No Links for Image Coupon or Click to Print
 					$couponimglink = "<img class='cctor_coupon_image' src='".$couponimage."' alt='".get_the_title()."' title='Coupon ".get_the_title()."'>";
-					$clicktoprintlink =	"";
+					$clicktoprintlink =	"<div class='cctor_opencoupon'></div>";
 				}				
 				//Check Expiration if past date then exit
 				$cc_blogtime = current_time('mysql');
@@ -319,5 +344,4 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 		
 	/***************************************************************************/		
 	
-	} //end Coupon_Creator_Plugin Class
-
+} //end Coupon_Creator_Plugin Class

@@ -86,3 +86,9 @@
 .form-table tr > *:empty {
     display: none;
 }
+
+div.alert {
+    border-left: 4px solid #dd3d36;
+    padding: 1px 12px;
+	color: #dd3d36;
+}
