@@ -2,7 +2,7 @@
 /*
 Plugin Name: Coupon Creator
 Plugin URI: http://jesseeproductions.com/coupon_creator/
-Version: 1.80
+Version: 1.90 Beta
 
 Description: This plugin creates a custom post type for coupons with a shortcode to display it on website and a single view template for printing.
 
@@ -20,7 +20,7 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 	die( 'Access denied.' );
 
 /*
-* Coupon Creator Minimum Requirements
+* Coupon Creator Constants
 * @version 1.80
 */
 if (!defined('CCTOR_PATH'))				define( 'CCTOR_PATH',	plugin_dir_path( __FILE__ ));
@@ -28,7 +28,13 @@ if (!defined('CCTOR_URL'))				define( 'CCTOR_URL',	plugin_dir_url( __FILE__ ));
 if (!defined('CCTOR_MIN_PHP_VERSION'))	define( 'CCTOR_MIN_PHP_VERSION',	'5.2');
 if (!defined('CCTOR_MIN_WP_VERSION'))	define( 'CCTOR_MIN_WP_VERSION',		'3.6');
 if (!defined('CCTOR_VERSION_KEY')) 		define( 'CCTOR_VERSION_KEY', 	'cctor_coupon_version');
-if (!defined('CCTOR_VERSION_NUM'))  	define( 'CCTOR_VERSION_NUM', 	'1.81');
+if (!defined('CCTOR_VERSION_NUM'))  	define( 'CCTOR_VERSION_NUM', 	'1.90');
+
+/*
+* Coupon Creator License
+* since 1.90
+*/
+if (!defined('COUPON_CREATOR_STORE_URL')) 		define( 'COUPON_CREATOR_STORE_URL', 	'http://couponcreatorplugin.com');
 
 /*
 * Check Requirements for WordPress and PHP
@@ -70,19 +76,8 @@ function cctor_error_requirements() {
 // Check requirements and load files if met
 if	( cctor_requirements() ) {
 
-		// Main Class
-		require_once( dirname( __FILE__ ) . '/classes/cctor-coupon-class.php' );
-		//Admin Class
-		require_once( dirname( __FILE__ ) . '/admin/cctor-admin-class.php' );
-
-		//Coupon Creator Start!
-		Coupon_Creator_Plugin::bootstrap( __FILE__ );
-		
-		register_activation_hook( __FILE__, array('Coupon_Creator_Plugin', 'activate') );
-		register_deactivation_hook(  __FILE__, array( 'Coupon_Creator_Plugin', 'deactivate' ) );
-
-		//Coupon Options echo coupon_options('cctor_coupon_base');
-		function coupon_options( $option ) {
+		//Coupon Options echo cctor_options('cctor_coupon_base');
+		function cctor_options( $option ) {
 			$options = get_option( 'coupon_creator_options' );
 
 			if ( isset( $options[$option] ) )
@@ -90,6 +85,18 @@ if	( cctor_requirements() ) {
 			else
 				return false;
 		}
+		
+		// Main Class
+		require_once( dirname( __FILE__ ) . '/classes/cctor-coupon-class.php' );
+		//Admin Class
+		require_once( dirname( __FILE__ ) . '/admin/cctor-admin-class.php' );
+		
+		//Coupon Creator Start!
+		return Coupon_Creator_Plugin::instance();
+		
+		//Flush Permalinks on Activate
+		register_activation_hook( __FILE__, array('Coupon_Creator_Plugin', 'activate') );
+		register_deactivation_hook(  __FILE__, array( 'Coupon_Creator_Plugin', 'deactivate' ) );
 
 } else {
 

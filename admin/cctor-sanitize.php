@@ -48,7 +48,7 @@ add_filter( 'cctor_sanitize_radio', 'cctor_sanitize_enum', 10, 2 );
 * @version 1.80
 */	
 add_filter( 'cctor_sanitize_image', 'sanitize_text_field' );
-
+add_filter( 'cctor_sanitize_proimage', 'sanitize_text_field' );
 /*
 * Checkbox Sanitize
 * @version 1.80
@@ -85,33 +85,8 @@ add_filter( 'cctor_sanitize_wysiwyg', 'cctor_sanitize_wysiwyg' );
 */	
 function cctor_sanitize_textarea_w_tags( $input ) {
 
-	if ( current_user_can( 'unfiltered_html' ) ) {
-		
-		$output = stripslashes($input);
-	}
-	else {
-		//Tags for textarea code
-		$cctor_allowedtags = array(
-				'a' => array(
-					'href' => array(),
-					'alt' => array(),					
-					'title' => array()
-				),
-				'img' => array(
-					'src' => array(),
-					'title' => array()
-				),				
-				'br' => array(),
-				'em' => array(),
-				'strong' => array(),
-				'p' => array(),
-				'ul' => array(),
-				'ol' => array(),
-				'li' => array()		
-			);
+		$output = wp_kses_post( $input );
 
-		$output = wp_kses( $input, $cctor_allowedtags);
-	}
 	return $output;
 }
 add_filter( 'cctor_sanitize_textarea_w_tags', 'cctor_sanitize_textarea_w_tags' );
@@ -154,7 +129,6 @@ add_filter( 'cctor_sanitize_date', 'sanitize_text_field' );
 */	
 add_filter( 'cctor_sanitize_dimensions', 'sanitize_dimension_field' );
 function sanitize_dimension_field( $input, $default = "") {
-	//If Number and Positive
 	if (is_numeric($input) && $input >= 0 ) {
 		return $input;
 	} else {
