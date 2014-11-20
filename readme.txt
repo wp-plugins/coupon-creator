@@ -14,7 +14,7 @@ Create coupons to display on your site by using a shortcode.
 
 == Description ==
 
-> <strong>Support on WordPress.org</strong> is for troubleshooting bugs and related issues. The forums are monitored and replied to within one week's time.
+> <strong>Support on WordPress.org</strong> is for troubleshooting bugs and related issues. The forums are monitored and replied to within one week's time, but usually within a day or two. 
 >
 > If you are looking for direct support please check out [Coupon Creator Pro](http://couponcreatorplugin.com)
 
