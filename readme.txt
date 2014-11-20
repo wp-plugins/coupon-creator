@@ -205,7 +205,7 @@ You can add custom css in the options and it will modify both the shortcode coup
 
 == Upgrade Notice ==
 = 1.90 =
-A major update to the Coupon Creator including adding a hook templating system to prepare for Coupon Creator Pro!
+A major update to the Coupon Creator including adding a hook templating system for Coupon Creator Pro, available Now!
 
 == Frequently Asked Questions ==
 <h4>What if I have support questions?</h4>
