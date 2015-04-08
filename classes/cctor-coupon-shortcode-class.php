@@ -14,10 +14,14 @@ class Coupon_Creator_Shortcode {
 	* @version 1.90
 	*/
 	public static function cctor_allcoupons_shortcode($atts) {
+		
 	   //Load Stylesheet for Coupon Creator when Shortcode Called
 	   if( !wp_style_is( 'coupon_creator_css' ) ) {
 		 wp_enqueue_style('coupon_creator_css');
+		 		 		
 	   }	 
+	   
+		do_action( 'cctor_shortcode_start' ); 
 	   
 	   //Coupon ID is the Custom Post ID
 	   $cctor_atts = shortcode_atts(array(
@@ -61,7 +65,7 @@ class Coupon_Creator_Shortcode {
 		
 		ob_start();
 		
-		do_action( 'cctor_before_coupon' ); 
+		do_action( 'cctor_before_coupon_wrap' ); 
 			
 		// The Coupon Loop
 		while ($coupons->have_posts()) {
@@ -69,7 +73,8 @@ class Coupon_Creator_Shortcode {
 			$coupons->the_post();
 						
 			$coupon_id = $coupons->post->ID;
-	
+			
+			do_action( 'cctor_before_coupon' , $coupon_id ); 
 				//Check to show the Coupon
 				if (cctor_expiration_check($coupon_id)) {
 					
@@ -108,9 +113,13 @@ class Coupon_Creator_Shortcode {
 					//No Coupon Will Show So Print HTML Comment
 					do_action( 'cctor_no_show_coupon' , $coupon_id );
 				}
+				
+				do_action( 'cctor_after_coupon' , $coupon_id );
+				
 			} //End While
+
 			
-			do_action( 'cctor_after_coupon' ); 
+			do_action( 'cctor_shortcode_end' ); 
 			
 			/* Restore original Post Data */
 			wp_reset_postdata();

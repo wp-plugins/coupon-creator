@@ -106,8 +106,8 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 			$cctor_coupon_option_js = CCTOR_PATH.'admin/js/cctor_coupon_options.js';
 			wp_enqueue_script('cctor_coupon_option_js',  CCTOR_URL . 'admin/js/cctor_coupon_options.js', array('jquery','thickbox','farbtastic'), filemtime($cctor_coupon_option_js), true);
 
-			$cctor_colorbox_js = CCTOR_PATH.'admin/colorbox/jquery.colorbox-min.js';
-			wp_enqueue_script('cctor_colorbox_js',  CCTOR_URL . 'admin/colorbox/jquery.colorbox-min.js' ,array('jquery'), filemtime($cctor_colorbox_js), true);
+			$cctor_colorbox_js = CCTOR_PATH.'vendor/colorbox/jquery.colorbox-min.js';
+			wp_enqueue_script('cctor_colorbox_js',  CCTOR_URL . 'vendor/colorbox/jquery.colorbox-min.js' ,array('jquery'), filemtime($cctor_colorbox_js), true);
 
 			//Hook to Load New Scripts
 			do_action('cctor_opitons_scripts');
@@ -126,8 +126,8 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 			wp_enqueue_style( 'wp-color-picker' );
 
 			//Color Box For How to Videos
-			$cctor_colorbox_css = CCTOR_PATH.'admin/colorbox/colorbox.css';
-			wp_enqueue_style('cctor_colorbox_css', CCTOR_URL . 'admin/colorbox/colorbox.css', false, filemtime($cctor_colorbox_css));
+			$cctor_colorbox_css = CCTOR_PATH.'vendor/colorbox/colorbox.css';
+			wp_enqueue_style('cctor_colorbox_css', CCTOR_URL . 'vendor/colorbox/colorbox.css', false, filemtime($cctor_colorbox_css));
 
 			//Hook to Load New Styles
 			do_action('cctor_opitons_styles');
@@ -155,26 +155,12 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 				'size'	=> 35
 			);
 
-			extract( wp_parse_args( $args, $defaults ) );
+			$option_args = wp_parse_args( $args, $defaults );
 
-			$field_args = array(
-				'type'      => $type,
-				'id'        => $id,
-				'desc'      => $desc,
-				'alert'		=> $alert,
-				'condition' => $condition,
-				'std'       => $std,
-				'choices'   => $choices,
-				'label_for' => $id,
-				'class'     => $class,
-				'imagemsg'	=> $imagemsg,
-				'size'		=> $size
-			);
+			if ( $option_args['type'] == 'checkbox' )
+				$this->checkboxes[] = $option_args['id'];
 
-			if ( $type == 'checkbox' )
-				$this->checkboxes[] = $id;
-
-			add_settings_field( $id, $title, array( $this, 'display_setting' ), 'coupon-options', $section, $field_args );
+			add_settings_field( $option_args['id'], $option_args['title'], array( $this, 'display_setting' ) , 'coupon-options', $option_args['section'], $option_args );
 		}
 
 	/***************************************************************************/
@@ -235,7 +221,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 				echo '<p style="text-align:right;">&copy; '.date("Y").' Jessee Productions, LLC</p>
 
 			</div>';
-				
+
 		}
 
 	/***************************************************************************/
@@ -258,21 +244,36 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 			<div>
 				<h4><img alt="Get Coupon Creator Pro!" src="<?php echo CCTOR_URL; ?>admin/images/cctor-logo.png"/></h4>
 				<br>
-				<p><strong style="font-size:15px;"><a href="http://couponcreatorplugin.com">Purchase Pro</a> and get all the features below with 1 year of updates and direct support.</strong></p>
+				<p><strong style="font-size:15px;"><a target="_blank" href="http://couponcreatorplugin.com">Purchase Pro</a> and get all the features below with 1 year of updates and direct support.</strong></p>
 				<br>
 				<ul>
 				<h4>Coupon Creator Pro Features Include:</h4><br>
+                    <li>In Pro use the Visual editor to easily style the term's content on your site:
+                        <img class="cctor-pro-img" alt="Coupon Creator Pro Counter" src="<?php echo CCTOR_URL; ?>admin/images/cctor-visual-editor.gif"/>
+                    </li>
+                    <li>Display the Print View in a Popup for any coupons and print directly from the Popup:
+                        <img class="cctor-pro-img" alt="Coupon Creator Pro Counter" src="<?php echo CCTOR_URL; ?>admin/images/cctor-popup.gif"/>
+                    </li>
+                    <li>Use the View Shortcodes to display content in the Shortcode View or the Print View only:
+                        <img class="cctor-pro-img" alt="Coupon Creator Pro Counter" src="<?php echo CCTOR_URL; ?>admin/images/cctor-shortcodes.gif"/>
+                    </li>
+                    <li>Create and Display WooCommerce Coupons from the Coupon Creator Editor:
+                        <img class="cctor-pro-img" alt="Coupon Creator Pro Counter" src="<?php echo CCTOR_URL; ?>admin/images/coupon-woocommerce.png"/>
+                    </li>
 					<li>Set a Counter per coupon to expire the coupon after a limit has been reached:
-					<img class="cctor-pro-img" alt="Coupon Creator Pro Counter" src="<?php echo CCTOR_URL; ?>admin/images/cctor-pro-counter.png"/>
+					    <img class="cctor-pro-img" alt="Coupon Creator Pro Counter" src="<?php echo CCTOR_URL; ?>admin/images/cctor-pro-counter.png"/>
 					</li>
 					<li>Change "Expires on:", "Click to Open in Print View", and "Print the Coupon" for all Coupons:
-					<img class="cctor-pro-img" alt="Coupon Creator Pro Change Text" src="<?php echo CCTOR_URL; ?>admin/images/cctor-pro-text-overrides.png"/>
+					    <img class="cctor-pro-img" alt="Coupon Creator Pro Change Text" src="<?php echo CCTOR_URL; ?>admin/images/cctor-pro-text-overrides.png"/>
 					</li>
 					<li>Set Coupon Size for both views of the coupon for regular coupons and the image coupon as well:
-					<img class="cctor-pro-img" alt="Coupon Creator Pro Change Text" src="<?php echo CCTOR_URL; ?>admin/images/cctor-pro-dimensions.png"/>
+					    <img class="cctor-pro-img" alt="Coupon Creator Pro Change Text" src="<?php echo CCTOR_URL; ?>admin/images/cctor-pro-dimensions.png"/>
 					</li>
 					<li>Override "Click to Open in Print View" text and link per coupon</li>
 					<li>Override "Print the Coupon" text and link per coupon</li>
+                    <li>Select where you want to display the Coupon Deal per coupon</li>
+                    <li>Disable the Print View per Coupon</li>
+                    <li>Add your Google Analytics Code to the Print Template from the Coupon Options</li>
 				</ul>
 				<ul>
 				<h4>Coupon Creator Pro Style Features:</h4><br>
@@ -282,13 +283,11 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 					<li>Set Outer Border Radius, works for the image coupon too</li>
 					<li>Select Coupon Terms Text Color</li>
 					<li>Select Coupon Background Color</li>
-					<li>Choose a Background Image with option to set Background Repeat, Background Position, and Background Size
-					<img class="cctor-pro-img" alt="Coupon Creator Pro Change Text" src="<?php echo CCTOR_URL; ?>admin/images/cctor-pro-styles.png"/>
-					</li>
+					<li>Choose a Background Image with option to set Background Repeat, Background Position, and Background Size</li>
 					<li>Direct Support through CouponCreatorPlugin.com</li>
 				</ul>
 				<br>
-				<strong style="font-size:15px;"><a href="http://couponcreatorplugin.com">Purchase Pro Now!</a></strong>
+				<strong style="font-size:15px;"><a target="_blank" href="http://couponcreatorplugin.com">Purchase Pro Now!</a></strong>
 			</div>
 			<?php echo ob_get_clean();
 		}
@@ -297,45 +296,39 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 		* Coupon Creator Display Options
 		* since 1.80
 		*/
-		public function display_setting( $args = array() ) {
-
-			extract( $args );
+		public function display_setting( $option_args = array() ) {
 
 			$options = get_option( 'coupon_creator_options' );
 
-			if ( ! isset( $options[$id] ) && $type != 'checkbox' )
-				$options[$id] = $std;
-			elseif ( ! isset( $options[$id] ) )
-				$options[$id] = 0;
+			if ( ! isset( $options[$option_args['id']] ) && $option_args['type'] != 'checkbox' )
+				$options[$option_args['id']] = $option_args['std'];
+			elseif ( ! isset( $options[$option_args['id']] ) )
+				$options[$option_args['id']] = 0;
 
-			$field_class = '';
-			if ( $class != '' )
-				$field_class = ' ' . $class;
-
-			switch ( $type ) {
+			switch ( $option_args['type'] ) {
 
 				case 'heading':
-					if ( $alert ) {
-						echo '</td></tr><tr valign="top"><td colspan="2"><span class="description">' . $alert . '</span>';
+					if ( $option_args['alert'] ) {
+						echo '</td></tr><tr valign="top"><td colspan="2"><span class="description">' . $option_args['alert'] . '</span>';
 					} else {
-						echo '</td></tr><tr valign="top"><td colspan="2"><h4>' . $desc . '</h4>';
+						echo '</td></tr><tr valign="top"><td colspan="2"><h4>' . $option_args['desc'] . '</h4>';
 					}
 					break;
 
 				case 'text':
-					if ( $alert != '' && cctor_options($condition) == 1 )
-						echo '<div class="alert">' . $alert . '</div>';
+					if ( $option_args['alert'] != '' && cctor_options($option_args['condition']) == 1 )
+						echo '<div class="alert">' . $option_args['alert'] . '</div>';
 
-					echo '<input class="regular-text' . $field_class . '" type="text" id="' . $id . '" name="coupon_creator_options[' . $id . ']" placeholder="' . $std . '" value="' . esc_attr( $options[$id] ) . '" size="' . $size . '" />';
+					echo '<input class="regular-text' . $option_args['class'] . '" type="text" id="' . $option_args['id'] . '" name="coupon_creator_options[' . $option_args['id'] . ']" placeholder="' . $option_args['std']  . '" value="' . esc_attr( $options[$option_args['id']] ) . '" size="' . $option_args['size'] . '" />';
 
-					if ( $desc != '' )
-						echo '<br /><span class="description">' . $desc . '</span>';
+					if ( $option_args['desc'] != '' )
+						echo '<br /><span class="description">' . $option_args['desc'] . '</span>';
 
 					break;
 
 				case 'checkbox':
 
-					echo '<input class="checkbox' . $field_class . '" type="checkbox" id="' . $id . '" name="coupon_creator_options[' . $id . ']" value="1" ' . checked( $options[$id], 1, false ) . ' /> <label for="' . $id . '">' . $desc . '</label>';
+					echo '<input class="checkbox' . $option_args['class'] . '" type="checkbox" id="' . $option_args['id'] . '" name="coupon_creator_options[' . $option_args['id'] . ']" value="1" ' . checked( $options[$option_args['id']], 1, false ) . ' /> <label for="' . $option_args['id'] . '">' . $option_args['desc'] . '</label>';
 
 					break;
 
@@ -343,118 +336,73 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 				case 'color':
 
 				$default_color = '';
-				if ( isset($std) ) {
-					if ( $options[$id] !=  $std )
-						$default_color = ' data-default-color="' .$std . '" ';
+				if ( isset($option_args['std']) ) {
+					if ( $options[$option_args['id']] !=  $option_args['std'] )
+						$default_color = ' data-default-color="' .$option_args['std'] . '" ';
 				}
 
-					echo '<input class="color-picker ' . $field_class . '" type="text" id="' . $id . '" name="coupon_creator_options[' . $id . ']" placeholder="' . $std . '" value="' . esc_attr( $options[$id] ) . '"' . $default_color .' /><br /><span class="description">' . $desc . '</span>';
+					echo '<input class="color-picker ' . $option_args['class'] . '" type="text" id="' . $option_args['id'] . '" name="coupon_creator_options[' . $option_args['id'] . ']" placeholder="' . $option_args['std']  . '" value="' . esc_attr( $options[$option_args['id']] ) . '"' . $default_color .' /><br /><span class="description">' . $option_args['desc'] . '</span>';
 
 					break;
 
 				case 'select':
-					echo '<select class="select' . $field_class . '" name="coupon_creator_options[' . $id . ']">';
+					echo '<select class="select' . $option_args['class'] . '" name="coupon_creator_options[' . $option_args['id'] . ']">';
 
-					foreach ( $choices as $value => $label )
-						echo '<option value="' . esc_attr( $value ) . '"' . selected( $options[$id], $value, false ) . '>' . $label . '</option>';
+					foreach ( $option_args['choices'] as $value => $label )
+						echo '<option value="' . esc_attr( $value ) . '"' . selected( $options[$option_args['id']], $value, false ) . '>' . esc_attr( $label ) . '</option>';
 
 					echo '</select>';
 
-					if ( $desc != '' )
-						echo '<br /><span class="description">' . $desc . '</span>';
+					if ( $option_args['desc'] != '' )
+						echo '<br /><span class="description">' . $option_args['desc'] . '</span>';
 
 					break;
 
 				case 'radio':
 					$i = 0;
-					foreach ( $choices as $value => $label ) {
-						echo '<input class="radio' . $field_class . '" type="radio" name="coupon_creator_options[' . $id . ']" id="' . $id . $i . '" value="' . esc_attr( $value ) . '" ' . checked( $options[$id], $value, false ) . '> <label for="' . $id . $i . '">' . $label . '</label>';
+					foreach ( $option_args['choices'] as $value => $label ) {
+						echo '<input class="radio' . $option_args['class'] . '" type="radio" name="coupon_creator_options[' . $option_args['id'] . ']" id="' . $option_args['id'] . $i . '" value="' . esc_attr( $value ) . '" ' . checked( $options[$option_args['id']], $value, false ) . '> <label for="' . $option_args['id'] . $i . '">' . esc_attr( $label ) . '</label>';
 						if ( $i < count( $options ) - 1 )
 							echo '<br />';
 						$i++;
 					}
 
-					if ( $desc != '' )
-						echo '<br /><span class="description">' . $desc . '</span>';
+					if ( $option_args['desc'] != '' )
+						echo '<br /><span class="description">' . $option_args['desc'] . '</span>';
 
 					break;
 
 				case 'textarea':
-					echo '<textarea class="' . $field_class . '" id="' . $id . '" name="coupon_creator_options[' . $id . ']" placeholder="' . $std . '" rows="12" cols="50">' . wp_htmledit_pre( $options[$id] ) . '</textarea>';
+					echo '<textarea class="' . $option_args['class'] . '" id="' . $option_args['id'] . '" name="coupon_creator_options[' . $option_args['id'] . ']" placeholder="' . $option_args['std']  . '" rows="12" cols="50">' . wp_htmledit_pre( $options[$option_args['id']] ) . '</textarea>';
 
-					if ( $desc != '' )
-						echo '<br /><span class="description">' . $desc . '</span><br />';
+					if ( $option_args['desc'] != '' )
+						echo '<br /><span class="description">' . $option_args['desc'] . '</span><br />';
 					break;
 
 				case 'cctor_support':
 
-					echo '
-					<h4>Video Guides</h4>
-					<ul>
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/tIau3ZNjoeI?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Creating a Coupon</a></li>
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/A1mULc_MyHs?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Creating an Image Coupon</a></li>
-						<li><a  class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/sozW-J-g3Ts?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Inserter and Aligning Coupons</a></li>
-						<li><a class="cctor-support youtube_colorbox" href="http://www.youtube.com/embed/h3Zg8rxIDdc?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Using the Coupon Creator Options</a></li>
-					</ul>
+					echo Coupon_Creator_Plugin_Admin::get_cctor_support_core_infomation();
 
-					<h4>Pro Video Guides</h4>
-					<ul>
-						
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/FI218DxXnrY?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Creating a Pro Coupon</a></li>
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/SqAG3s1FniA?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Creating a Pro Image Coupon</a></li>			
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/8L0JmSB_V-E?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Using the Pro Options</a></li>					
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/aVkwq8cIgB0?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Using the Pro Counter</a></li>
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/vmViVkoQB0M?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Using the Pro Background Image</a></li>
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/b3cV8gVf4lU?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Using the Pro Dimension Options</a></li>
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/pFnp5VsfwUE?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Using the Pro Text Overrides</a></li>
-					</ul>
-					
-					<h4>Resources</h4>
-					<ul>
-						<li><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/support/documentation/">Documentation</a> - Overview of CSS Selectors, Actions, Filters, Capabilities, and Post Types</li>
-						<li><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/support/frequently-asked-question/">Frequently Asked Question</a> - Pre Sales, License, Requirements, and Setup Information</li>
-						<li><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/support/guides/">Guides</a> - User Guides and Troubleshooting Guides</li>
-						<li><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/support/tutorials/">Tutorials</a> - Customization Tutorials and More</li>
-					</ul>
-
-					<h4>How to Contact Support</h4>
-					<ul>
-						<li>Please use the <a class="cctor-support" href="https://wordpress.org/support/plugin/coupon-creator/">WordPress.org Support Forum for the Coupon Creator</a>.</li>
-						<li><br>Before contacting support please try to narrow or solve your issue by using one or all of these troubleshooting guides:
-							<ul>
-							<li><br><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/knowledgebase/troubleshooting-404-errors/">Troubleshooting 404 Errors</a></li>
-							<li><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/knowledgebase/troubleshooting-conflicts/">Troubleshooting Conflicts</a></li>
-							<li><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/knowledgebase/troubleshooting-javascript-errors/">Troubleshooting Javascript Errors</a></li>
-							</ul>
-						</li>
-
-					</ul>';
+					echo Coupon_Creator_Plugin_Admin::get_cctor_support_core_contact();
 
 				break;
 
 				case 'license':
 
 					$cctor_license_info = array();
-					$cctor_license = "cctor_" . $class;
-					$cctor_license_read = "";
-
+					$cctor_license = "cctor_" . $option_args['class'];
 					$cctor_license_info	= get_option( $cctor_license );
 
-					//If License is Valid then read only the field
-					if(isset($cctor_license_info['status']) && $cctor_license_info['status'] !== false && $cctor_license_info['status'] == 'valid' ) {
-						//$cctor_license_read = "readonly";
-					}
+					echo '<input class="regular-text' . $option_args['class'] . '" type="text" id="' . $option_args['id'] . '" name="coupon_creator_options[' . $option_args['id'] . ']" placeholder="' . $option_args['std']  . '" value="' . esc_attr( $cctor_license_info['key'] ) . '" size="' . $option_args['size'] . '"/>';
 
-					echo '<input class="regular-text' . $field_class . '" type="text" id="' . $id . '" name="coupon_creator_options[' . $id . ']" placeholder="' . $std . '" value="' . esc_attr( $cctor_license_info['key'] ) . '" size="' . $size . '" ' . $cctor_license_read . ' />';
-
-					if ( $desc != '' )
-						echo '<br /><span class="description">' . $desc . '</span>';
+					if ( $option_args['desc'] != '' )
+						echo '<br /><span class="description">' . $option_args['desc'] . '</span>';
 					break;
 
 				case 'license_status':
 
 					$cctor_license_info = array();
-					$cctor_license = "cctor_" . $class;
+					$cctor_license = "cctor_" . $option_args['class'];
 
 					$cctor_license_info	= get_option( $cctor_license );
 
@@ -464,7 +412,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 					} else {
 						$expirationco =  '';;
 					}
-					
+
 					$cc_expiration_date = strtotime($expirationco);
 
 					if ($expirationco) { // Only Display Expiration if Date
@@ -485,8 +433,8 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 
 								wp_nonce_field( 'cctor_license_nonce', 'cctor_license_nonce' );
 
-							echo '<input type="hidden" class="cctor_license_key" name="cctor_license_key" value="cctor_'. esc_attr($class) .'"/>';
-							echo '<input type="hidden" class="cctor_license_name" name="cctor_license_name" value="'. esc_attr($condition) .'"/>';
+							echo '<input type="hidden" class="cctor_license_key" name="cctor_license_key" value="cctor_'. esc_attr($option_args['class']) .'"/>';
+							echo '<input type="hidden" class="cctor_license_name" name="cctor_license_name" value="'. esc_attr($option_args['condition']) .'"/>';
 							echo '<input type="submit" class="cctor-license-button-act" name="cctor_license_deactivate" value="'. _('Deactivate License') .'"/>';
 
 						 } else {
@@ -504,8 +452,8 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 
 								wp_nonce_field( 'cctor_license_nonce', 'cctor_license_nonce' );
 
-							echo '<input type="hidden" class="cctor_license_key" name="cctor_license_key" value="cctor_'. esc_attr($class) .'"/>';
-							echo '<input type="hidden" class="cctor_license_name" name="cctor_license_name" value="'. esc_attr($condition) .'"/>';
+							echo '<input type="hidden" class="cctor_license_key" name="cctor_license_key" value="cctor_'. esc_attr($option_args['class']) .'"/>';
+							echo '<input type="hidden" class="cctor_license_name" name="cctor_license_name" value="'. esc_attr($option_args['condition']) .'"/>';
 							echo '<input type="submit" class="cctor-license-button-det" name="cctor_license_activate" value="'. __('Activate License') .'"/>';
 
 						 }
@@ -517,7 +465,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 
 			if(has_filter('cctor_option_cases')) {
 				// this adds any addon fields (from plugins) to the array
-				echo apply_filters('cctor_option_cases', $options, $type, $id, $desc, $alert, $condition, $field_class, $size, $std, $choices, $class , $imagemsg);
+				echo apply_filters('cctor_option_cases', $options, $option_args);
 			}
 		}
 	/***************************************************************************/
@@ -593,8 +541,8 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 			);
 			$this->options['cctor_nofollow_print_link'] = array(
 				'section' => 'permalinks',
-				'title'   => __( 'Click to Print Links', 'coupon_creator' ),
-				'desc'    => __( 'Add nofollow to all the "Click to Print" links', 'coupon_creator' ),
+				'title'   => __( 'Print View Links', 'coupon_creator' ),
+				'desc'    => __( 'Add nofollow to all the "Click to Open in Print View" links', 'coupon_creator' ),
 				'type'    => 'checkbox',
 				'std'     => 1 // Set to 1 to be checked by default, 0 to be unchecked by default.
 			);
@@ -636,7 +584,15 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 				'section' => 'display',
 				'class'   => 'code'
 			);
-
+			//wpautop
+			$this->options['cctor_wpautop'] = array(
+				'section' => 'display',
+				'title'   => __( 'Auto P Filter', 'coupon_creator' ),
+				'desc'    => __( 'Check to remove <a href="http://codex.wordpress.org/Function_Reference/wpautop" target="_blank">wpautop filter</a> from Coupon Terms Field', 'coupon_creator' ),
+				'type'    => 'checkbox',
+				'std'     => 1 // Set to 1 to be checked by default, 0 to be unchecked by default.
+			);
+			
 			//Help
 			$this->options['cctor_help'] = array(
 				'section' => 'help',
@@ -678,8 +634,15 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 		*/
 		public static function cctor_newsletter_signup() {
 
-							echo '<!-- Begin MailChimp Signup Form -->
-					<div id="mc_embed_signup">
+			echo '<div class="cctor-promo-boxes">
+
+					<h3>Keep The Coupon Creator Going!</h3>
+					<p>Every time you rate <strong>5 stars</strong>, it shows your support for the Coupon Creator and helps make it better!</p>
+					<p><a href="https://wordpress.org/support/view/plugin-reviews/coupon-creator?filter=5" target="_blank" class="button-primary">Rate It</a></p>
+				</div>';
+				
+			echo '<!-- Begin MailChimp Signup Form -->
+					<div id="mc_embed_signup" class="cctor-promo-boxes">
 						<form action="//CouponCreatorPlugin.us9.list-manage.com/subscribe/post?u=f2b881e89d24e6f424aa25aa5&amp;id=2b82660ba0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
 
 							<div id="mc_embed_signup_scroll">
@@ -701,10 +664,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 
 							</div>
 						</form>
-					</div>
-
-						<!--End mc_embed_signup-->';
-
+					</div><!--End mc_embed_signup-->';
 		}
 
 	/***************************************************************************/
@@ -765,8 +725,8 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 				$options = get_option( 'coupon_creator_options' );
 
 				foreach ( $this->checkboxes as $id ) {
-					if ( isset( $options[$id] ) && ! isset( $input[$id] ) ) {
-						unset( $options[$id] );
+					if ( isset( $options[$option_args['id']] ) && ! isset( $input[$id] ) ) {
+						unset( $options[$option_args['id']] );
 					}
 				}
 
@@ -778,7 +738,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin_Options' ) ) {
 						if ( $option['class'] == 'permalink' ) {
 							$input[$id] = str_replace(" ", "-",  strtolower(trim($input[$id])));
 							//if option is new then set to flush permalinks
-							if($options[$id] != $input[$id] ) {
+							if($options[$option_args['id']] != $input[$id] ) {
 								$permalink_change = $id . "_change";
 								update_option($permalink_change, true);
 							}

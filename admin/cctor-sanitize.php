@@ -45,10 +45,19 @@ add_filter( 'cctor_sanitize_radio', 'cctor_sanitize_enum', 10, 2 );
 
 /*
 * Image Field Sanitize
-* @version 1.80
+* @version 2.0
 */	
-add_filter( 'cctor_sanitize_image', 'sanitize_text_field' );
-add_filter( 'cctor_sanitize_proimage', 'sanitize_text_field' );
+add_filter( 'cctor_sanitize_image', 'cctor_sanitize_image_num' );
+add_filter( 'cctor_sanitize_proimage', 'cctor_sanitize_image_num' );
+function cctor_sanitize_image_num( $input ) {
+
+	if ( is_numeric($input) ) {
+		return $input;
+	}
+	
+	return false;
+}
+
 /*
 * Checkbox Sanitize
 * @version 1.80
@@ -134,4 +143,26 @@ function sanitize_dimension_field( $input, $default = "") {
 	} else {
 		return $default;
 	} 
+}
+/*
+* Sanitize Google Analytics
+* @version 2.0
+*/	
+add_filter( 'cctor_sanitize_ga_analytics', 'sanitize_ga_analytics_field' );
+function sanitize_ga_analytics_field( $input, $default = "" ) {
+	
+	$input = trim( esc_html( $input ) );
+	// en dash to minus, prevents issue with code copied from web with "fancy" dash
+	$input = str_replace( '–', '-', $input );
+
+	if ( ! preg_match( '|^UA-\d{4,}-\d+$|', $input ) ) {
+
+		return $default;
+		
+	} else {
+
+		return $input;
+		
+	}
+	
 }

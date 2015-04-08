@@ -9,10 +9,7 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 	*/
 	class Coupon_Creator_Plugin {
 
-	/**
-	 * @var Coupon Creator Pro
-	 * @since 1.90
-	 */
+
 	private static $instance;
 
 	/**
@@ -70,6 +67,7 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 			//Load Admin Class if in Admin Section
 			if ( is_admin() )
 			new Coupon_Creator_Plugin_Admin();
+					
 		}
 
 	/***************************************************************************/
@@ -110,7 +108,15 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 			add_action( 'cctor_action_print_template', 'cctor_print_template', 100);			
 			
 			//Print Template Inline Custom CSS from Option
-			add_action('coupon_print_head', array( __CLASS__, 'cctor_print_css' ), 100);				
+			add_action('coupon_print_head', array( __CLASS__, 'cctor_print_css' ), 100);		
+
+			//Load Pro Meta Box Cases
+			add_filter( 'cctor_filter_terms_tags', array( __CLASS__, 'cctor_terms_allowed_tags' ) , 10 , 1 );		
+			
+			//Remove wpautop filter on terms fields
+			if ( cctor_options('cctor_wpautop') == 1 ) {
+				add_filter( 'the_content', array( __CLASS__, 'cctor_remove_autop_for_coupons' ), 0 );  	
+			}
 		}
 
 	/***************************************************************************/		
@@ -171,6 +177,7 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 				'query_var'          => true,
 				'can_export'		 => true,
 				'capability_type'	 => array("cctor_coupon", "cctor_coupons"),
+				'map_meta_cap'		 => true,
 				'has_archive'        => false,
 				'rewrite'            => array( 'slug' => $slug ),
 				'menu_icon'          => CCTOR_URL . 'admin/images/coupon_creator.png',
@@ -295,6 +302,7 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 			if (!is_admin()) {
 				$cctor_style = CCTOR_PATH.'css/cctor_coupon.css';
 				wp_register_style('coupon_creator_css',  CCTOR_URL . 'css/cctor_coupon.css', false, filemtime($cctor_style));
+							
 			}
 		}
 		/*
@@ -384,6 +392,33 @@ if( $_SERVER[ 'SCRIPT_FILENAME' ] == __FILE__ )
 				<?php echo ob_get_clean();
 			}
 		}
+	/***************************************************************************/
+	
+		/*
+		* Allowed Tags for Terms Field
+		* @version 2.0
+		*/	
+		public static function cctor_terms_allowed_tags( $cctor_terms_tags ) {
+
+		    $cctor_terms_tags = '<h1><h2><h3><h4><h5><h6><p><blockquote><div><pre><code><span><br><b><strong><em><img><del><ins><sub><sup><ul><ol><li><hr>';
+			
+			return $cctor_terms_tags;
+			
+		}
+
+	/***************************************************************************/
+		/*
+		* Remove wpautop in Terms Field
+		* @version 2.0
+		* based of coding from http://www.wpcustoms.net/snippets/remove-wpautop-custom-post-types/
+		*/	
+		public static function cctor_remove_autop_for_coupons( $content )  {  
+
+			'cctor_coupon' === get_post_type() && remove_filter( 'the_content', 'wpautop' );  
+			
+			return $content;  
+			
+		} 
 		
 	/***************************************************************************/
 

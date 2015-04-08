@@ -18,7 +18,7 @@ if ( ! class_exists( 'Coupon_Creator_Meta_Box' ) ) {
 			//Setup Coupon Meta Boxes
 			add_action( 'add_meta_boxes', array( __CLASS__, 'cctor_add_meta_boxes' ) );
 			//Save Meta Boxes Data
-			add_action( 'save_post', array( __CLASS__, 'cctor_save_coupon_creator_meta' ),50, 2 );
+			add_action( 'save_post', array( __CLASS__, 'cctor_save_coupon_creator_meta' ), 10, 2 );
 			//Coupon Expiration Information
 			add_action( 'edit_form_after_title',  array( __CLASS__, 'cctor_information_box' ) , 10 );
 		}
@@ -94,7 +94,7 @@ if ( ! class_exists( 'Coupon_Creator_Meta_Box' ) ) {
 			if($pagenow !='post-new.php' && $typenow=='cctor_coupon'){
 
 				$coupon_id = $post->ID;
-
+							
 				if(Coupon_Creator_Meta_Box::cctor_meta_expiration_check($coupon_id)) {
 
 					echo '<div class="cctor-meta-bg cctor-message"><div>'.__('This Coupon is Showing', 'coupon_creator' ) .'</div></div>';
@@ -296,18 +296,31 @@ if ( ! class_exists( 'Coupon_Creator_Meta_Box' ) ) {
 
 								<?php break;
 								// checkbox
-								case 'checkbox': ?>
+								case 'checkbox': 
+									
+									//Check for Default
+									global $pagenow;
+									$selected = '';
+									if ( $meta ) {
+										$selected = $meta;
+									} elseif ( $pagenow =='post-new.php' && isset( $field['value'] ) ) {
+										$selected = $field['value'];
+									}
+								
+								?>
 
-									<input type="checkbox" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" <?php echo checked( $meta, 1, false ); ?>/><label for="<?php echo $field['id']; ?>"><?php echo $field['desc']; ?></label>
+									<input type="checkbox" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" <?php echo checked( $selected, 1, false ); ?>/><label for="<?php echo $field['id']; ?>"><?php echo $field['desc']; ?></label>
 
 								<?php break;
 
 								case 'select':
-
-								//Find Current Selected Value or use Default
-								if ($meta) {
+								
+								//Check for Default
+								global $pagenow;
+								$selected = '';
+								if ( $meta ) {
 									$selected = $meta;
-								} else {
+								} elseif ( $pagenow =='post-new.php' ) {
 									$selected = $field['value'];
 								}
 
@@ -356,56 +369,40 @@ if ( ! class_exists( 'Coupon_Creator_Meta_Box' ) ) {
 
 								<?php break;
 								 // date
-								 case 'date': ?>
-
+								 case 'date': 
+								 
+								//Blog Time According to WordPress
+								$cctor_todays_date = "";
+								if ($field['id'] == "cctor_expiration" ) {
+									$cc_blogtime = current_time('mysql');
+								
+									list( $today_year, $today_month, $today_day, $hour, $minute, $second ) = preg_split( '([^0-9])', $cc_blogtime 
+									);
+								
+									if ( cctor_options('cctor_default_date_format') == 1 || $meta == 1 ) {
+										$today_first = $today_day;
+										$today_second = $today_month;
+									} else {
+										$today_first = $today_month;
+										$today_second = $today_day;									
+									}
+			
+									$cctor_todays_date = '<span class="description">'. __( 'Today\'s Date is ','coupon_creator' ) . $today_first.'/'.$today_second.'/'. $today_year . '</span>';
+								}
+								?>
+	
 									<input type="text" class="datepicker" name="<?php echo $field['id']; ?>" id="<?php echo $field['id']; ?>" value="<?php echo esc_attr( $meta ); ?>" size="10" />
 									<br /><span class="description"><?php echo $field['desc']; ?></span>
-
+									<?php echo $cctor_todays_date; ?>
+									
 								<?php break;
 									// Videos
 								 case 'cctor_support':?>
 
-					<h4>Video Guides</h4>
-					<ul>
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/tIau3ZNjoeI?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Creating a Coupon</a></li>
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/A1mULc_MyHs?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Creating an Image Coupon</a></li>
-						<li><a  class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/sozW-J-g3Ts?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Inserter and Aligning Coupons</a></li>
-						<li><a class="cctor-support youtube_colorbox" href="http://www.youtube.com/embed/h3Zg8rxIDdc?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Using the Coupon Creator Options</a></li>
-					</ul>
-
-					<h4>Pro Video Guides</h4>
-					<ul>
-						
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/FI218DxXnrY?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Creating a Pro Coupon</a></li>
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/SqAG3s1FniA?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Creating a Pro Image Coupon</a></li>			
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/8L0JmSB_V-E?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Using the Pro Options</a></li>					
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/aVkwq8cIgB0?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Using the Pro Counter</a></li>
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/vmViVkoQB0M?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Using the Pro Background Image</a></li>
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/b3cV8gVf4lU?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Using the Pro Dimension Options</a></li>
-						<li><a class="cctor-support youtube_colorbox"  href="http://www.youtube.com/embed/pFnp5VsfwUE?hd=1&autohide=1&rel=0&showsearch=0&autoplay=1" rel="how_to_videos">Using the Pro Text Overrides</a></li>
-					</ul>
-					
-					<h4>Resources</h4>
-					<ul>
-						<li><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/support/documentation/">Documentation</a> - Overview of CSS Selectors, Actions, Filters, Capabilities, and Post Types</li>
-						<li><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/support/frequently-asked-question/">Frequently Asked Question</a> - Pre Sales, License, Requirements, and Setup Information</li>
-						<li><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/support/guides/">Guides</a> - User Guides and Troubleshooting Guides</li>
-						<li><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/support/tutorials/">Tutorials</a> - Customization Tutorials and More</li>
-					</ul>
-
-					<h4>How to Contact Support</h4>
-					<ul>
-						<li>Please use the <a class="cctor-support" href="https://wordpress.org/support/plugin/coupon-creator/">WordPress.org Support Forum for the Coupon Creator</a>.</li>
-
-						<li><br>Before contacting support please try to narrow or solve your issue by using one or all of these troubleshooting guides:
-							<ul>
-							<li><br><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/knowledgebase/troubleshooting-404-errors/">Troubleshooting 404 Errors</a></li>
-							<li><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/knowledgebase/troubleshooting-conflicts/">Troubleshooting Conflicts</a></li>
-							<li><a class="cctor-support" target="_blank" href="http://couponcreatorplugin.com/knowledgebase/troubleshooting-javascript-errors/">Troubleshooting Javascript Errors</a></li>
-							</ul>
-						</li>
-
-					</ul>
+									<?php echo Coupon_Creator_Plugin_Admin::get_cctor_support_core_infomation(); 
+										
+										  echo Coupon_Creator_Plugin_Admin::get_cctor_support_core_contact();
+									?>
 
 								<?php break;
 
@@ -413,7 +410,7 @@ if ( ! class_exists( 'Coupon_Creator_Meta_Box' ) ) {
 
 						if(has_filter('cctor_filter_meta_cases')) {
 							// this adds any addon fields (from plugins) to the array
-							echo apply_filters('cctor_filter_meta_cases', $field, $meta);
+							echo apply_filters('cctor_filter_meta_cases', $field, $meta, $post);
 						} ?>
 
 					</div> <!-- end .cctor-meta-field.field-<?php echo $field['type']; ?>.field-<?php echo $field['id']; ?> -->
@@ -477,7 +474,16 @@ if ( ! class_exists( 'Coupon_Creator_Meta_Box' ) ) {
 					'alert' => '',
 					'section' => 'coupon_creator_meta_box',
 					'tab' => 'content'
-				);
+				);		
+				$coupon_creator_meta_fields[$prefix . 'deal_display'] =	array(
+					'label' => '',
+					'desc' => '',
+					'id' => $prefix . 'deal_display',
+					'type'  => '',
+					'alert' => '',
+					'section' => 'coupon_creator_meta_box',
+					'tab' => 'content'
+				);				
 				$coupon_creator_meta_fields[$prefix . 'heading_terms'] = array(
 					'id' => $prefix . 'heading_terms',
 					'title'   => '',
@@ -592,16 +598,8 @@ if ( ! class_exists( 'Coupon_Creator_Meta_Box' ) ) {
 				);
 
 				//Help
-				$coupon_creator_meta_fields[$prefix . 'heading_support'] = array(
-					'id' => $prefix . 'heading_support',
-					'title'   => '',
-					'desc'    =>  __( 'How to Videos','coupon_creator' ),
-					'type'    => 'heading',
-					'section' => 'coupon_creator_meta_box',
-					'tab' => 'help'
-				);
 				$coupon_creator_meta_fields[$prefix . 'videos'] =	array(
-					'label'  => __( 'Support:', 'coupon_creator' ),
+					'label'  => '',
 					'id'    => $prefix . 'videos',
 					'type'  => 'cctor_support',
 					'section' => 'coupon_creator_meta_box',
