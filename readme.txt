@@ -36,7 +36,7 @@ https://www.youtube.com/watch?v=oTa7puu7t24
 * Create and Display WooCommerce Coupons from the Coupon Creator Editor
 * Set a Counter per coupon to expire the coupon after a limit has been reached
 * Change “Expires on:”, “Click to Open in Print View”, and “Print the Coupon” for all coupons
-* Set coupon size for the Shortcode View and the Print View for all coupons including the Image Coupon.
+* Set coupon size for the Shortcode View and the Print View for all coupons including the Image Coupon
 * Override “Click to Open in Print View” text and link per coupon
 * Override “Print the Coupon” text and link per coupon
 * Disable the Print View per coupon
