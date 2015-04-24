@@ -5,8 +5,8 @@ Plugin URI: http://couponcreatorplugin.com
 Tags: custom post type, coupon, shortcode
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=W6FGHL2BUNY2W&lc=US&item_name=Coupon%20Creator&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
 Requires at least: 3.9
-Tested up to: 4.1
-Stable tag: 2.0.1
+Tested up to: 4.2
+Stable tag: 2.0.2
 License: GPLv2
 License URI: http://www.opensource.org/licenses/GPL-2.0
 
@@ -35,10 +35,10 @@ https://www.youtube.com/watch?v=oTa7puu7t24
 * Use the View Shortcodes to display content in the Shortcode View or the Print View only
 * Create and Display WooCommerce Coupons from the Coupon Creator Editor
 * Set a Counter per coupon to expire the coupon after a limit has been reached
-* Change ìExpires on:î, ìClick to Open in Print Viewî, and ìPrint the Couponî for all coupons
+* Change ‚ÄúExpires on:‚Äù, ‚ÄúClick to Open in Print View‚Äù, and ‚ÄúPrint the Coupon‚Äù for all coupons
 * Set coupon size for the Shortcode View and the Print View for all coupons including the Image Coupon
-* Override ìClick to Open in Print Viewî text and link per coupon
-* Override ìPrint the Couponî text and link per coupon
+* Override ‚ÄúClick to Open in Print View‚Äù text and link per coupon
+* Override ‚ÄúPrint the Coupon‚Äù text and link per coupon
 * Disable the Print View per coupon
 * Add your Google Analytics Code to the Print Template from the Coupon Options
 
@@ -127,6 +127,10 @@ You can add custom css in the options and it will modify both the shortcode coup
 6. Coupon Options
 
 == Changelog ==
+= 2.0.2 April 9th, 2015 =
+* Fixed tabs on reload of options or editor it returns you to the same tab
+* Secured wp_remote_get function with esc_url_raw on add_query_arg call
+
 = 2.0.1 April 9th, 2015 =
 * Fixed so permalinks are flushed on activate and deactivate
 * Fixed undefined notice error when saving coupon options
@@ -240,8 +244,8 @@ You can add custom css in the options and it will modify both the shortcode coup
 * Initial Release and 1st Version and 1st Plugin!
 
 == Upgrade Notice ==
-= 2.0.1 =
-Fixes permalink flush on activation, a responsive admin, and more.
+= 2.0.2 =
+WordPress 4.2 and Security Update
 
 == Frequently Asked Questions ==
 <h4>What if I have support questions?</h4>
