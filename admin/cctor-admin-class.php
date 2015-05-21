@@ -93,7 +93,7 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 	/***************************************************************************/
 	/*
 	* Add Options Link in Plugin entry of Plugins Menu
-	* @version 1.70
+	* @version 2.0.3
 	*/
 	public static function plugin_setting_link($links, $file) {
 		static $this_plugin;
@@ -104,7 +104,14 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 
 		// make sure this is the coupon creator
 		if ($file == $this_plugin) {
-			$plugin_links[] = '<a href="' . get_bloginfo('wpurl') .'/wp-admin/edit.php?post_type=cctor_coupon&page=coupon-options">Options</a>';
+
+			//Show Options Link
+			$plugin_links[] = '<a href="' . get_bloginfo( 'wpurl' ) . '/wp-admin/edit.php?post_type=cctor_coupon&page=coupon-options">Options</a>';
+
+			//Show Pro Link
+			if ( !defined( 'CCTOR_PRO_VERSION_NUM' ) ) {
+				$plugin_links[] = '<a href="https://couponcreatorplugin.com/products/coupon-creator-pro/">Go Pro!</a>';
+			}
 
 			// add the settings link to the links
 			foreach($plugin_links as $link) {
@@ -400,6 +407,9 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 				// decode the license data
 				$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
+				//Remove Current Expiration
+				$cctor_license_info['status'] = "nostatus";
+
 				//Get Status of Key
 				$cctor_license_info['status']  = esc_attr($license_data->license);
 
@@ -466,7 +476,6 @@ if ( ! class_exists( 'Coupon_Creator_Plugin_Admin' ) ) {
 				$license_data = json_decode( wp_remote_retrieve_body( $response ) );
 
 				// $license_data->license will be either "deactivated" or "failed"
-
 				if( $license_data->license == 'deactivated' || $license_data->license == 'failed' ) {
 
 					unset($cctor_license_info['status']);
